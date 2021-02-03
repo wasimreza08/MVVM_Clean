@@ -1,9 +1,8 @@
-package com.codeartist.trivagochallenge.search.di
+package com.codeartist.trivagochallenge.common.di
 
 import com.codeartist.trivagochallenge.common.Constants
-import com.codeartist.trivagochallenge.search.data.RemoteAPI
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.codeartist.trivagochallenge.detail.data.DetailAPI
+import com.codeartist.trivagochallenge.search.data.remotesource.RemoteAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +29,14 @@ object RetrofitModule {
         return retrofit
             .build()
             .create(RemoteAPI::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDetailService(retrofit: Retrofit.Builder): DetailAPI {
+        return retrofit
+            .build()
+            .create(DetailAPI::class.java)
     }
 
 }
