@@ -12,18 +12,6 @@
             type="java.lang.Boolean" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".search.presentation.activity.SearchActivity">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/Theme.TrivagoChallenge.AppBarOverlay">
-
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,9 +20,7 @@
             <FrameLayout
                 android:id="@+id/edit_text_holder"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="10dp"
-                app:layout_constraintHeight_percent=".1"
+                android:layout_height="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
@@ -46,6 +32,8 @@
                     android:layout_height="34dp"
                     android:background="@drawable/search_text_shape"
                     android:ems="10"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:singleLine="true"
                     android:paddingLeft="10dp"
                     android:paddingRight="60dp"
@@ -68,8 +56,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_percent=".9"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_holder"
                 tools:layout_editor_absoluteX="213dp" />
 
@@ -84,8 +72,5 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edit_text_holder" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

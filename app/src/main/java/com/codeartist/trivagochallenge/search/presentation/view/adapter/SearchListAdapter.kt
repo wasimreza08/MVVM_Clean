@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.codeartist.trivagochallenge.databinding.ItemSearchBinding
-import com.codeartist.trivagochallenge.search.presentation.uimodel.CharaterModel
+import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import javax.inject.Inject
 
 
 class SearchListAdapter @Inject constructor() :
-    ListAdapter<CharaterModel, SearchListAdapter.ViewHolder>(ListAdapterCallBack()) {
+    ListAdapter<CharacterModel, SearchListAdapter.ViewHolder>(ListAdapterCallBack()) {
 
     private lateinit var mItemClickListener: OnItemClickListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,7 +39,7 @@ class SearchListAdapter @Inject constructor() :
 
         }
 
-        fun bind(item: CharaterModel, itemClickListener: OnItemClickListener) {
+        fun bind(item: CharacterModel, itemClickListener: OnItemClickListener) {
             binding.character = item
             binding.executePendingBindings()
             binding.fullItem.setOnClickListener() {
@@ -50,16 +50,16 @@ class SearchListAdapter @Inject constructor() :
     }
 }
 
-class ListAdapterCallBack : DiffUtil.ItemCallback<CharaterModel>() {
-    override fun areItemsTheSame(oldItem: CharaterModel, newItem: CharaterModel): Boolean {
+class ListAdapterCallBack : DiffUtil.ItemCallback<CharacterModel>() {
+    override fun areItemsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
         return oldItem.name.equals(newItem.name)
     }
 
-    override fun areContentsTheSame(oldItem: CharaterModel, newItem: CharaterModel): Boolean {
+    override fun areContentsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
         return oldItem.equals(newItem)
     }
 }
 
 interface OnItemClickListener {
-    fun onItemClicked(view: View, item: CharaterModel)
+    fun onItemClicked(view: View, item: CharacterModel)
 }

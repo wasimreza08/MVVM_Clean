@@ -8,21 +8,21 @@
         <variable
             name="character"
             type="com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel" />
+
+        <variable
+            name="populationInfo"
+            type="com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:id="@+id/relativeLayout">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="32dp"
             android:text="@{character.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,56 +31,40 @@
             android:id="@+id/birth_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{character.birthYear}"
             android:layout_below="@+id/name"
+            android:layout_marginLeft="32dp"
+            android:text="@{character.birthYear}"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/name"/>
+            app:layout_constraintTop_toBottomOf="@+id/name" />
 
         <TextView
             android:id="@+id/height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{character.height}"
             android:layout_below="@+id/birth_year"
+            android:layout_marginLeft="32dp"
+            android:text="@{character.height}"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/birth_year"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp" />
+            app:layout_constraintTop_toBottomOf="@+id/birth_year" />
 
         <TextView
             android:id="@+id/population"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Population"
             android:layout_below="@+id/height"
+            android:layout_marginLeft="32dp"
+            android:text="@{populationInfo.population}"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/height"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp" />
+            app:layout_constraintTop_toBottomOf="@+id/height" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detail_list"
             android:layout_width="match_parent"
-            android:layout_height="499dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/population"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="50dp"
             app:layout_constraintTop_toBottomOf="@+id/population" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

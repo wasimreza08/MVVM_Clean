@@ -1,6 +1,7 @@
 package com.codeartist.trivagochallenge.search.data.entity
 
-import com.codeartist.trivagochallenge.search.presentation.uimodel.CharaterModel
+import com.codeartist.trivagochallenge.common.baseentity.Convertable
+import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
@@ -23,21 +24,20 @@ data class SearchNetworkEntity(
     @Expose
     var results: List<ResultNetworkEntity>? = null
 
-) : Convertable<List<CharaterModel>> {
-    override fun convertTo(): List<CharaterModel> {
+) : Convertable<List<CharacterModel>> {
+    override fun convertTo(): List<CharacterModel> {
         return results?.let {
             it.map {
-                CharaterModel(
+                CharacterModel(
                     name = it.name.orEmpty(), height = it.height.orEmpty(),
                     birthYear = it.birthYear.orEmpty(),
                     homeworld = it.homeworld.orEmpty(),
                     films = it.films ?: emptyList(),
                     species = it.species ?: emptyList(),
-                    starships = it.starships ?: emptyList(),
                     url = it.url.orEmpty()
                 )
             }
-        } ?: emptyList<CharaterModel>()
+        } ?: emptyList()
     }
 }
 

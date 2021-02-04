@@ -6,7 +6,7 @@
 
         <variable
             name="character"
-            type="com.codeartist.trivagochallenge.search.presentation.uimodel.CharaterModel" />
+            type="com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel" />
 
     </data>
 
