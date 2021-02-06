@@ -28,15 +28,7 @@ data class ResultNetworkEntity(
 
     @SerializedName("species")
     @Expose
-    var species: List<String>? = null,
-
-    @SerializedName("starships")
-    @Expose
-    var starships: List<Any>? = null,
-
-    @SerializedName("url")
-    @Expose
-    var url: String? = null,
+    var species: List<String>? = null
 )
         
 

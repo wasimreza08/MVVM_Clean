@@ -24,7 +24,6 @@ abstract class BaseActivity<DataBinding : ViewDataBinding> : AppCompatActivity()
 
     var mAlert: AlertDialog? = null
     fun showAlertDialog(context: Context?) {
-        //println("result test:" + "show dialog called " + context)
         if (mAlert == null || !(mAlert as AlertDialog).isShowing) {
             println("result test:" + "show dialog inside if " + context)
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)

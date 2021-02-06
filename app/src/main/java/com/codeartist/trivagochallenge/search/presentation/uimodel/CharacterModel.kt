@@ -10,6 +10,5 @@ data class CharacterModel(
     var birthYear: String,
     var homeworld: String,
     var films: List<String>,
-    var species: List<String>,
-    var url: String
+    var species: List<String>
 ):Parcelable
