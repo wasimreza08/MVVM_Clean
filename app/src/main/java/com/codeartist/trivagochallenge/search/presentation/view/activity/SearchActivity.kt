@@ -1,75 +1,84 @@
 package com.codeartist.trivagochallenge.search.presentation.view.activity
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codeartist.trivagochallenge.R
+import com.codeartist.trivagochallenge.common.activity.BaseActivity
 import com.codeartist.trivagochallenge.common.Constants
 import com.codeartist.trivagochallenge.common.Status
 import com.codeartist.trivagochallenge.databinding.ActivitySearchBinding
 import com.codeartist.trivagochallenge.detail.presentation.view.activity.DetailActivity
+import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import com.codeartist.trivagochallenge.search.presentation.view.adapter.OnItemClickListener
 import com.codeartist.trivagochallenge.search.presentation.view.adapter.SearchListAdapter
-import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import com.codeartist.trivagochallenge.search.presentation.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity(), OnItemClickListener {
+class SearchActivity(override val layoutResourceId: Int = R.layout.activity_search) :
+    BaseActivity<ActivitySearchBinding>(), OnItemClickListener {
     @Inject
-    lateinit var mAdapter: SearchListAdapter
+    lateinit var searchListAdapter: SearchListAdapter
     val viewModel: SearchViewModel by viewModels()
-    private lateinit var binding: ActivitySearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding =
-            DataBindingUtil.setContentView(this, R.layout.activity_search)
-        binding.editTextTextPersonName.doAfterTextChanged {
-            val searchString = binding.editTextTextPersonName.text.toString()
+        dataBinding.editTextTextPersonName.doAfterTextChanged {
+            val searchString = dataBinding.editTextTextPersonName.text.toString()
             viewModel.setSearchString(searchString)
             setCrossVisibility(searchString)
-
         }
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        mAdapter.addClickListener(this)
-        binding.recyclerView.adapter = mAdapter
+        dataBinding.recyclerView.setHasFixedSize(true)
+        dataBinding.recyclerView.layoutManager = LinearLayoutManager(this)
+        searchListAdapter.addClickListener(this)
+        dataBinding.recyclerView.adapter = searchListAdapter
         viewModel.searchResult.observe(this) {
             if (it.status == Status.LOADING) {
-                binding.progressVisibility = true
+                dataBinding.progressVisibility = true
             } else if (it.status == Status.SUCCESS) {
                 it.data?.let {
-                    mAdapter.submitList(it)
-                    binding.progressVisibility = false
+                    searchListAdapter.submitList(it)
+                    dataBinding.progressVisibility = false
                 }
             } else {
-                //todo
-
+                dataBinding.progressVisibility = false
+                showAlertDialog(this)
             }
 
         }
-        binding.lifecycleOwner = this
+        //dataBinding.lifecycleOwner = this
     }
 
     fun resetSearchText(view: View) {
-        binding.editTextTextPersonName.setText("")
+        dataBinding.editTextTextPersonName.setText("")
         setCrossVisibility("")
     }
 
     private fun setCrossVisibility(searchString: String) {
-        binding.crossVisibility = searchString.isNotEmpty()
+        dataBinding.crossVisibility = searchString.isNotEmpty()
     }
 
     override fun onItemClicked(view: View, item: CharacterModel) {
         val intent = Intent(this, DetailActivity::class.java).apply {
             putExtra(Constants.EXTRA_DATA, item)
         }
-        startActivity(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, )
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                view, getString(R.string.transition_text)
+            )
+            startActivity(intent, options.toBundle())
+        } else {
+            startActivity(intent)
+        }
+
+
     }
 }

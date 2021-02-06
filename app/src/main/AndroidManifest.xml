@@ -10,22 +10,24 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+
         android:supportsRtl="true"
         android:theme="@style/Theme.TrivagoChallenge">
-        <activity
-            android:name=".detail.presentation.view.activity.ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/Theme.TrivagoChallenge.NoActionBar"></activity>
+
         <activity
             android:name=".search.presentation.view.activity.SearchActivity"
-            android:theme="@style/Theme.TrivagoChallenge.NoActionBar">
+            android:theme="@style/Theme.TrivagoChallenge.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".detail.presentation.view.activity.DetailActivity" />
+        <activity
+            android:name=".detail.presentation.view.activity.DetailActivity"
+            android:theme="@style/Theme.TrivagoChallenge.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

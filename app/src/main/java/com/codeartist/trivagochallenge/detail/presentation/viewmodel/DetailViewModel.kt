@@ -12,6 +12,8 @@ import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
 class DetailViewModel @ViewModelInject constructor(
@@ -28,89 +30,89 @@ class DetailViewModel @ViewModelInject constructor(
     val speciseList: LiveData<MutableList<SpeciesModel>> = _speciesList
     private val _population = MutableLiveData<PlanetModel>()
     val population: LiveData<PlanetModel> = _population
-    private val _isError = MutableLiveData<Boolean>(false)
+    private val _isError = MutableLiveData(false)
     val isError: LiveData<Boolean> = _isError
-    private val _isLoading = MutableLiveData<Boolean>(false)
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> = _isLoading
 
 
-    private fun getFilm(link: String?) {
-        viewModelScope.launch(Dispatchers.IO) {
-            parseId(link)?.let {
-                val filmInfo = getFilmsUseCase.execute(it)
-                //Log.e(TAG + "films:", it.toString())
-                if (filmInfo.status == Status.SUCCESS) {
-                    filmInfo.data?.let {
-                        val list = _filmList.value
-                        list?.add(it)
-                        _filmList.postValue(list)
-                    }
+    private suspend fun getFilm(link: String?) {
+        parseId(link)?.let {
+            val filmInfo = getFilmsUseCase.execute(it)
+            when (filmInfo.status) {
+                Status.SUCCESS -> filmInfo.data?.let {
+                    val list = _filmList.value
+                    list?.add(it)
+                    _filmList.postValue(list)
                 }
+                Status.ERROR -> _isError.postValue(true)
+                else -> return
             }
+
+            //Log.e(TAG, "job1 ends")
         }
     }
 
-    private fun getFilms(films: List<String>?) {
+    private suspend fun getFilms(films: List<String>?) {
         films?.let {
-           it.map { getFilm(it) }
+            it.forEach { getFilm(it) }
         }
     }
 
 
-    private fun getSpecie(link: String?) {
-        viewModelScope.launch(Dispatchers.IO) {
-            parseId(link)?.let {
-                val speciesInfo = getSpeciesUseCase.execute(it)
-                if (speciesInfo.status == Status.SUCCESS) {
+    private suspend fun getSpecie(link: String?) {
+        parseId(link)?.let {
+            val speciesInfo = getSpeciesUseCase.execute(it)
+            when (speciesInfo.status) {
+                Status.SUCCESS -> speciesInfo.data?.let {
                     _isError.postValue(false)
-                    speciesInfo.data?.let {
-                        val list = _speciesList.value
-                        list?.add(it)
-                        _speciesList.postValue(list)
-                    }
-                } else if(speciesInfo.status == Status.ERROR){
-                    _isError.postValue(true)
+                    val list = _speciesList.value
+                    list?.add(it)
+                    _speciesList.postValue(list)
                 }
+                Status.ERROR -> _isError.postValue(true)
+                else -> return
+                //Log.e(TAG, "job2 ends")
             }
         }
     }
 
-    private fun getSpecies(species: List<String>?) {
+    private suspend fun getSpecies(species: List<String>?) {
         species?.let {
-            it.map { getSpecie(it) }
+            it.forEach { getSpecie(it) }
         }
     }
 
-    private fun getPopulation(link: String?) {
-        viewModelScope.launch(Dispatchers.IO) {
-            parseId(link)?.let {
-                val population = getPopulationUseCase.execute(it)
-                if (population.status == Status.SUCCESS) {
-                    population.data?.let {
-                        _isError.postValue(false)
-                        _population.postValue(population.data)
-                    }
-                } else if (population.status == Status.ERROR){
-                    _isError.postValue(true)
+    private suspend fun getPopulation(link: String?) {
+        parseId(link)?.let {
+            val population = getPopulationUseCase.execute(it)
+            when (population.status) {
+                Status.SUCCESS -> population.data?.let {
+                    _isError.postValue(false)
+                    _population.postValue(population.data)
                 }
+                Status.ERROR -> _isError.postValue(true)
+                else -> return
+
             }
+            // Log.e(TAG, "job3 ends")
         }
+
     }
 
 
     fun collectionCharacterDetail(info: CharacterModel) {
+        val jobs: MutableList<Job> = mutableListOf()
         viewModelScope.launch {
             _isLoading.value = true
-            val job1 = viewModelScope.launch { getFilms(info.films) }
-            val job2 = viewModelScope.launch { getSpecies(info.species) }
-            val job3 = viewModelScope.launch { getPopulation(info.homeworld) }
-            job1.join()
-            job2.join()
-            job3.join()
+            jobs.add(viewModelScope.launch(Dispatchers.IO) { getFilms(info.films) })
+            jobs.add(viewModelScope.launch(Dispatchers.IO) { getSpecies(info.species) })
+            jobs.add(viewModelScope.launch(Dispatchers.IO) { getPopulation(info.homeworld) })
+            jobs.joinAll()
             _isLoading.value = false
         }
-
     }
+
 
     private fun parseId(link: String?): Int? {
         val url = link?.split("/")

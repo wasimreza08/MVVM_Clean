@@ -40,6 +40,7 @@
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
                     app:title="@{character.name}"
+                    android:transitionName="@string/transition_text"
                     app:popupTheme="@style/Theme.TrivagoChallenge.PopupOverlay" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -47,6 +48,7 @@
 
         <include layout="@layout/content_scrolling"
             android:id="@+id/include_layout"/>
+
         <ProgressBar
             android:id="@+id/progressBarDetail"
             style="?android:attr/progressBarStyle"
@@ -54,6 +56,7 @@
             android:layout_height="wrap_content"
             android:visibility="@{progressVisibility, default=gone}"
             android:layout_gravity="center"/>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

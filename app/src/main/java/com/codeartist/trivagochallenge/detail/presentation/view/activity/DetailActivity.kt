@@ -1,49 +1,95 @@
 package com.codeartist.trivagochallenge.detail.presentation.view.activity
 
 import android.os.Bundle
-import android.util.Log
+import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codeartist.trivagochallenge.R
+import com.codeartist.trivagochallenge.common.activity.BaseActivity
 import com.codeartist.trivagochallenge.common.Constants
 import com.codeartist.trivagochallenge.databinding.ActivityDetailBinding
+import com.codeartist.trivagochallenge.detail.presentation.view.adapter.CharacterInfoAdapter
 import com.codeartist.trivagochallenge.detail.presentation.view.adapter.FilmAdapter
-import com.codeartist.trivagochallenge.detail.presentation.view.adapter.HeaderAdapter
+import com.codeartist.trivagochallenge.detail.presentation.view.adapter.SingleLineAdapter
 import com.codeartist.trivagochallenge.detail.presentation.view.adapter.SpeciesAdapter
 import com.codeartist.trivagochallenge.detail.presentation.viewmodel.DetailViewModel
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
+class DetailActivity(override val layoutResourceId: Int = R.layout.activity_detail) :
+    BaseActivity<ActivityDetailBinding>() {
     @Inject
     lateinit var filmAdapter: FilmAdapter
 
     @Inject
-    lateinit var filmHeaderAdapter: HeaderAdapter
+    lateinit var filmHeaderAdapter: SingleLineAdapter
 
     @Inject
     lateinit var speciesAdapter: SpeciesAdapter
 
     @Inject
-    lateinit var speciesHeaderAdapter: HeaderAdapter
+    lateinit var speciesHeaderAdapter: SingleLineAdapter
+
+    @Inject
+    lateinit var characterInfoAdapter: CharacterInfoAdapter
+
+    @Inject
+    lateinit var populationAdapter: SingleLineAdapter
     val viewModel: DetailViewModel by viewModels()
-    lateinit var binding: ActivityDetailBinding
+    private val TAG = "DetailActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         val info = intent.getParcelableExtra<CharacterModel>(Constants.EXTRA_DATA)
-        binding.character = info
-        binding.lifecycleOwner = this
-        info?.let { viewModel.collectionCharacterDetail(info) }
-        Log.e("species", info?.species.toString())
+        info?.let {
+            dataBinding.character = it
+            dataBinding.toolbar.title = it.name
+            viewModel.collectionCharacterDetail(it)
+            setRecyclerViewData(it)
+        }
+        setSupportActionBar(dataBinding.toolbar)
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setDisplayShowTitleEnabled(true)
+        }
+        observingData()
+    }
+
+    private fun setRecyclerViewData(info: CharacterModel) {
+        dataBinding.includeLayout.detailList.setHasFixedSize(true)
+        dataBinding.includeLayout.detailList.layoutManager = LinearLayoutManager(this)
+        speciesHeaderAdapter.setText(getString(R.string.species))
+        filmHeaderAdapter.setText(getString(R.string.films))
+        characterInfoAdapter.setInfo(info)
+        val adapter =
+            ConcatAdapter(
+                characterInfoAdapter,
+                populationAdapter,
+                speciesHeaderAdapter,
+                speciesAdapter,
+                filmHeaderAdapter,
+                filmAdapter
+            )
+        dataBinding.includeLayout.detailList.adapter = adapter
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                supportFinishAfterTransition()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun observingData() {
         viewModel.population.observe(this) {
             it?.let {
-                binding.populationInfo = it
+                populationAdapter.setText(getString(R.string.population) + " " + it.population)
             }
         }
         viewModel.filmList.observe(this) {
@@ -52,13 +98,18 @@ class DetailActivity : AppCompatActivity() {
         viewModel.speciseList.observe(this) {
             speciesAdapter.setSpeciesInfo(it)
         }
-        binding.detailList.setHasFixedSize(true)
-        binding.detailList.layoutManager = LinearLayoutManager(this)
-        filmHeaderAdapter.setHeader("Films")
-        speciesHeaderAdapter.setHeader("Species")
-        val adapter =
-            ConcatAdapter(speciesHeaderAdapter, speciesAdapter, filmHeaderAdapter, filmAdapter)
-        binding.detailList.adapter = adapter
-       //println("instances of adapter " + filmHeaderAdapter + "  " + speciesHeaderAdapter)
+        viewModel.isLoading.observe(this) {
+            it?.let {
+                dataBinding.progressVisibility = it
+                // Log.e(TAG+"progressbar", it.toString())
+            }
+
+        }
+        viewModel.isError.observe(this) {
+            it?.let {
+                // Log.e(TAG+"error:", it.toString())
+                if (it) showAlertDialog(this)
+            }
+        }
     }
 }

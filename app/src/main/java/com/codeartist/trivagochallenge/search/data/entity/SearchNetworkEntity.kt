@@ -29,7 +29,8 @@ data class SearchNetworkEntity(
         return results?.let {
             it.map {
                 CharacterModel(
-                    name = it.name.orEmpty(), height = it.height.orEmpty(),
+                    name = it.name.orEmpty(),
+                    height = it.height.orEmpty(),
                     birthYear = it.birthYear.orEmpty(),
                     homeworld = it.homeworld.orEmpty(),
                     films = it.films ?: emptyList(),

@@ -4,17 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.codeartist.trivagochallenge.databinding.ItemHeaderBinding
+import com.codeartist.trivagochallenge.databinding.ItemCharacterInfoBinding
+import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import javax.inject.Inject
 
 
-class HeaderAdapter @Inject constructor() :
-    RecyclerView.Adapter<HeaderAdapter.ViewHolder>() {
+class CharacterInfoAdapter @Inject constructor() :
+    RecyclerView.Adapter<CharacterInfoAdapter.ViewHolder>() {
 
-    private var headerString: String = ""
+    private lateinit var character: CharacterModel
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemHeaderBinding.inflate(
+            ItemCharacterInfoBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -23,26 +24,30 @@ class HeaderAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(headerString)
+        holder.bind(character)
     }
 
     override fun getItemCount(): Int {
         return 1
     }
 
-    fun setHeader(header: String) {
-        headerString = header
+    fun setInfo(item: CharacterModel?) {
+        item?.let {
+            character = item
+            notifyDataSetChanged()
+        }
+
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        lateinit var binding: ItemHeaderBinding
+        lateinit var binding: ItemCharacterInfoBinding
 
-        constructor(binding: ItemHeaderBinding) : this(binding.root) {
+        constructor(binding: ItemCharacterInfoBinding) : this(binding.root) {
             this.binding = binding
         }
 
-        fun bind(text: String) {
-            binding.headerString = text
+        fun bind(item: CharacterModel) {
+            binding.characterInfo = item
             binding.executePendingBindings()
         }
     }
