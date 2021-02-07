@@ -11,10 +11,7 @@ import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class DetailViewModel @ViewModelInject constructor(
     private val getFilmsUseCase: GetFilmsUseCase,
@@ -32,31 +29,29 @@ class DetailViewModel @ViewModelInject constructor(
     val population: LiveData<PlanetModel> = _population
     private val _isError = MutableLiveData(false)
     val isError: LiveData<Boolean> = _isError
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
 
-    private suspend fun getFilm(link: String?) {
-        parseId(link)?.let {
-            val filmInfo = getFilmsUseCase.execute(it)
-            when (filmInfo.status) {
-                Status.SUCCESS -> filmInfo.data?.let {
-                    val list = _filmList.value
-                    list?.add(it)
-                    _filmList.postValue(list)
-                }
-                Status.ERROR -> _isError.postValue(true)
-                else -> return
-            }
-
-            //Log.e(TAG, "job1 ends")
-        }
-    }
-
     private suspend fun getFilms(films: List<String>?) {
         films?.let {
-            it.forEach { getFilm(it) }
+            val list = it.map {
+                parseId(it)?.let {
+                    viewModelScope.async(Dispatchers.IO) {
+                        getFilmsUseCase.execute(it)
+                    }
+                }
+            }.filterNotNull().onEach {
+                if (it.await().status == Status.ERROR) _isError.postValue(
+                    true
+                )
+            }.map { it.await().data }
+                .filterNotNull()
+
+            _filmList.postValue(list.toMutableList())
         }
+
+
     }
 
 

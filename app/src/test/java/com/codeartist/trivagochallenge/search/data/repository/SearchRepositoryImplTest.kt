@@ -2,18 +2,12 @@ package com.codeartist.trivagochallenge.search.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.codeartist.trivagochallenge.common.Status
-import com.codeartist.trivagochallenge.common.di.RetrofitModule
 import com.codeartist.trivagochallenge.search.data.remotesource.RemoteAPI
-import com.codeartist.trivagochallenge.search.di.SearchRetrofitAPI
 import com.codeartist.trivagochallenge.search.domain.repository.SearchRepository
-import com.codeartist.trivagochallenge.util.MockResponseFileReader
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
-import org.junit.After
 import org.junit.Before
 
 import org.junit.Assert.*

@@ -1,6 +1,9 @@
 package com.codeartist.trivagochallenge.util
 
 import com.codeartist.trivagochallenge.search.data.entity.ResultNetworkEntity
+import com.codeartist.trivagochallenge.search.data.entity.SearchNetworkEntity
+import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
+import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModelTest
 
 object DummyDataProvider {
     fun singleResultDataProvider(): ResultNetworkEntity {
@@ -14,6 +17,19 @@ object DummyDataProvider {
         )
         var species: List<String>? = listOf("http://swapi.dev/api/species/23/")
         return ResultNetworkEntity(name, height, birthYear, homeworld, films, species)
+    }
+
+    fun singleCharacterDataProvider(): CharacterModel {
+        var name: String = "Adi Gallia"
+        var height: String = "184"
+        var birthYear: String = "unknown"
+        var homeworld: String = ""
+        var films: List<String> = listOf(
+            "http://swapi.dev/api/films/4/",
+            "http://swapi.dev/api/films/6/"
+        )
+        var species: List<String> = listOf("http://swapi.dev/api/species/23/")
+        return CharacterModel(name, height, birthYear, homeworld, films, species)
     }
 
     fun nullResultDataProvider(): ResultNetworkEntity {
@@ -39,5 +55,9 @@ object DummyDataProvider {
     }
     fun searchResultListWithOneItemsProvider():List<ResultNetworkEntity>{
         return mutableListOf(singleResultDataProvider())
+    }
+
+    fun searchNetworkEntityProvider(): SearchNetworkEntity{
+        return SearchNetworkEntity(searchResultListWithOneItemsProvider())
     }
 }

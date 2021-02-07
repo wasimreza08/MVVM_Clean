@@ -1,6 +1,7 @@
 package com.codeartist.trivagochallenge.detail.presentation.view.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
@@ -101,7 +102,7 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
         viewModel.isLoading.observe(this) {
             it?.let {
                 dataBinding.progressVisibility = it
-                // Log.e(TAG+"progressbar", it.toString())
+                 Log.e(TAG+"progressbar", it.toString())
             }
 
         }

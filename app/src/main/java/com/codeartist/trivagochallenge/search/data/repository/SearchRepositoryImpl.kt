@@ -8,11 +8,11 @@ import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(private val remoteAPI: RemoteAPI): SearchRepository {
     override suspend fun searchCharacter(searchString: String): DataState<SearchNetworkEntity> {
-        try {
+        return try {
             val data = remoteAPI.getCharacter(searchString)
-            return DataState.success(data = data)
+            DataState.success(data = data)
         } catch (e: Throwable) {
-            return DataState.error(e.message)
+            DataState.error(e.message)
         }
 
     }
