@@ -1,3 +1,3 @@
 package com.codeartist.trivagochallenge.detail.presentation.uimodel
 
-data class PlanetModel(var population: String)
+data class PlanetModel(var name: String = "", var population: String = "")

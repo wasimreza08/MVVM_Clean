@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 class SearchViewModel @ViewModelInject constructor(
     private val searchUseCase: SearchUseCase,
-    //private val defaultDispatcher: CoroutineDispatcher = IO,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 

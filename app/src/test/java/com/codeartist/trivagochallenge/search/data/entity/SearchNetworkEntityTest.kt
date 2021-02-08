@@ -45,7 +45,7 @@ class SearchNetworkEntityTest {
             equalTo(DummyDataProvider.singleResultDataProvider().birthYear)
         )
         assertThat(
-            searchModel.get(0).homeworld,
+            searchModel.get(0).homeWorld,
             equalTo(DummyDataProvider.singleResultDataProvider().homeworld)
         )
         assertThat(
@@ -77,7 +77,7 @@ class SearchNetworkEntityTest {
             equalTo("")
         )
         assertThat(
-            searchList.get(0).homeworld,
+            searchList.get(0).homeWorld,
             equalTo("")
         )
         assertThat(

@@ -39,18 +39,22 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="60dp"
                     android:imeOptions="actionSearch"
-                    android:hint="Character Name"
-                    android:layout_gravity="center" />
+                    android:hint="@string/character_name"
+                    android:layout_gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="40dp" />
                 <ImageView
                     android:id="@+id/cross"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="16dp"
                     android:visibility="@{crossVisibility, default=gone}"
                     android:clickable="true"
                     android:onClick="resetSearchText"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@android:drawable/ic_delete"/>
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@android:drawable/ic_menu_delete"
+                    android:layout_marginEnd="16dp"
+                    android:focusable="true" />
             </FrameLayout>
 
 
@@ -72,6 +76,5 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edit_text_holder" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

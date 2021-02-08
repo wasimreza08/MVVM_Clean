@@ -39,6 +39,7 @@ class FilmAdapter @Inject constructor() :
     }
 
     fun setFilms(list : MutableList<FilmModel>){
+        films.clear()
         films.addAll(list)
         notifyDataSetChanged()
     }

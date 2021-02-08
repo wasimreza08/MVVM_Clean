@@ -7,6 +7,8 @@
     <string name="species_language">Language: </string>
     <string name="birth_year">Birth Year: </string>
     <string name="height">Height: </string>
+    <string name="home_world">Home World </string>
+    <string name="home_world_name">Home World Name: </string>
     <string name="population">Population: </string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="transition_text">item_transition</string>
@@ -14,5 +16,6 @@
     <string name="species">Species</string>
     <string name="error_text">Something went wrong. There is a error occurred during data fetching.</string>
     <string name="ok">OK</string>
+    <string name="character_name">Character Name</string>
 
 </resources>

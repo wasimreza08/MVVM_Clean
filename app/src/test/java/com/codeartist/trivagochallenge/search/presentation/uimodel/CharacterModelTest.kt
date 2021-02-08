@@ -1,10 +1,8 @@
 package com.codeartist.trivagochallenge.search.presentation.uimodel
 
 import com.codeartist.trivagochallenge.util.DummyDataProvider
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
-import org.junit.Assert.*
 import org.junit.Test
 
 class CharacterModelTest {
@@ -24,7 +22,7 @@ class CharacterModelTest {
         MatcherAssert.assertThat(result.name, equalTo(name))
         MatcherAssert.assertThat(result.height, equalTo(height))
         MatcherAssert.assertThat(result.birthYear, equalTo(birthYear))
-        MatcherAssert.assertThat(result.homeworld, equalTo(homeworld))
+        MatcherAssert.assertThat(result.homeWorld, equalTo(homeworld))
         MatcherAssert.assertThat(result.films, equalTo(films))
         MatcherAssert.assertThat(result.films.size, equalTo(2))
         MatcherAssert.assertThat(result.species, equalTo(species))

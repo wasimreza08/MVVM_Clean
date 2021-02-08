@@ -8,7 +8,7 @@ data class CharacterModel(
     var name: String,
     var height: String,
     var birthYear: String,
-    var homeworld: String,
+    var homeWorld: String,
     var films: List<String>,
     var species: List<String>
 ):Parcelable

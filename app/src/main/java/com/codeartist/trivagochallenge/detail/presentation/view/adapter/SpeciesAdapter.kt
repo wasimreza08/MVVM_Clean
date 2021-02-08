@@ -39,6 +39,7 @@ class SpeciesAdapter @Inject constructor() :
     }
 
     fun setSpeciesInfo(list : MutableList<SpeciesModel>){
+        species.clear()
         species.addAll(list)
         notifyDataSetChanged()
     }

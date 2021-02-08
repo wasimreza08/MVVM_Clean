@@ -8,7 +8,7 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("android:visibility")
     fun setVisibility(view: View, value: Boolean) {
-        view.setVisibility(if (value) View.VISIBLE else View.GONE)
+        view.visibility = if (value) View.VISIBLE else View.GONE
     }
     @JvmStatic
     @BindingAdapter("header_text")

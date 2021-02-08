@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.search.data.entity
 
+import com.codeartist.trivagochallenge.common.Utils
 import com.codeartist.trivagochallenge.common.baseentity.Convertable
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import com.google.gson.annotations.Expose
@@ -17,9 +18,10 @@ data class SearchNetworkEntity(
             it.map {
                 CharacterModel(
                     name = it.name.orEmpty(),
-                    height = it.height.orEmpty(),
+                    height = it.height?.let { it + " cm or " + Utils.cmToFeetInches(it.toInt()) }
+                        ?: "",
                     birthYear = it.birthYear.orEmpty(),
-                    homeworld = it.homeworld.orEmpty(),
+                    homeWorld = it.homeworld.orEmpty(),
                     films = it.films ?: emptyList(),
                     species = it.species ?: emptyList()
                 )

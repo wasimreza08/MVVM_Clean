@@ -16,8 +16,7 @@
 
         <activity
             android:name=".search.presentation.view.activity.SearchActivity"
-            android:theme="@style/Theme.TrivagoChallenge.NoActionBar"
-            android:screenOrientation="portrait">
+            android:theme="@style/Theme.TrivagoChallenge.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +25,7 @@
         </activity>
         <activity
             android:name=".detail.presentation.view.activity.DetailActivity"
-            android:theme="@style/Theme.TrivagoChallenge.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.TrivagoChallenge.NoActionBar" />
     </application>
 
 </manifest>
