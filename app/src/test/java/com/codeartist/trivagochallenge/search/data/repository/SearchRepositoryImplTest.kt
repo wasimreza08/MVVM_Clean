@@ -1,11 +1,10 @@
 package com.codeartist.trivagochallenge.search.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.codeartist.trivagochallenge.common.Status
+import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.data.remotesource.RemoteAPI
 import com.codeartist.trivagochallenge.search.domain.repository.SearchRepository
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Before

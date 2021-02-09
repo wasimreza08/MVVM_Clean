@@ -1,4 +1,4 @@
-package com.codeartist.trivagochallenge.common
+package com.codeartist.trivagochallenge.common.utils
 
 class Constants {
     companion object{

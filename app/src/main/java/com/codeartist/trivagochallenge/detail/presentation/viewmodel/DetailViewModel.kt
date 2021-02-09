@@ -5,8 +5,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.codeartist.trivagochallenge.common.DataState
-import com.codeartist.trivagochallenge.common.Status
+import com.codeartist.trivagochallenge.common.utils.DataState
+import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetFilmsUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetPopulationUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetSpeciesUseCase
@@ -16,6 +16,7 @@ import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.asFlow
 
 class DetailViewModel @ViewModelInject constructor(
     private val getFilmsUseCase: GetFilmsUseCase,
@@ -27,12 +28,6 @@ class DetailViewModel @ViewModelInject constructor(
     private val TAG = "DetailViewModel"
     var defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
         @VisibleForTesting set
-   // private val _filmList = MutableLiveData<MutableList<FilmModel>>(mutableListOf())
-    //val filmList: LiveData<MutableList<FilmModel>> = _filmList
-   // private val _speciesList = MutableLiveData<MutableList<SpeciesModel>>(mutableListOf())
-   // val speciseList: LiveData<MutableList<SpeciesModel>> = _speciesList
-   // private val _population = MutableLiveData<PlanetModel>()
-    //val population: LiveData<PlanetModel> = _population
     private val _isError = MutableLiveData(false)
     val isError: LiveData<Boolean> = _isError
     private val errorCollector: MutableList<Boolean> = mutableListOf()
@@ -60,7 +55,29 @@ class DetailViewModel @ViewModelInject constructor(
     }
 
     private fun errorIdentifier() {
-        _isError.postValue(errorCollector.contains { true })
+        _isError.postValue(errorCollector.contains(true))
+    }
+
+    private suspend fun getFilms2(films: List<String>?): MutableList<FilmModel> {
+
+        films?.let {
+            val list = it.map {
+                parseId(it)?.let {
+                    viewModelScope.async(Dispatchers.IO) {
+                        Log.e("collection films", it.toString())
+                        getFilmsUseCase.execute(it)
+                        //Log.e("films collection", "it")
+                    }
+                }
+            }.filterNotNull().onEach {
+                if (it.await().status == Status.ERROR) {
+                    errorCollector.add(true)
+                }
+            }.map { it.await().data }
+                .filterNotNull()
+            return list.toMutableList()
+        }
+        return emptyList<FilmModel>().toMutableList()
     }
 
 

@@ -1,6 +1,8 @@
-package com.codeartist.trivagochallenge.common
+package com.codeartist.trivagochallenge.common.utils
 
-data class DataState<T>(
+import javax.inject.Inject
+
+data class DataState<T> (
     var status: Status?,
     var message: String? = null,
     var data: T? = null

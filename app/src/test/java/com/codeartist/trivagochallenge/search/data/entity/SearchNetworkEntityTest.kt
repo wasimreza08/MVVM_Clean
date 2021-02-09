@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.search.data.entity
 
+import com.codeartist.trivagochallenge.common.utils.Utils
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -38,7 +39,12 @@ class SearchNetworkEntityTest {
         )
         assertThat(
             searchModel.get(0).height,
-            equalTo(DummyDataProvider.singleResultDataProvider().height)
+            equalTo(DummyDataProvider.singleResultDataProvider().height?.toInt()?.let {
+                DummyDataProvider.singleResultDataProvider().height+" cm or "+
+                Utils.cmToFeetInches(
+                    it
+                )
+            })
         )
         assertThat(
             searchModel.get(0).birthYear,

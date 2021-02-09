@@ -1,6 +1,6 @@
 package com.codeartist.trivagochallenge.search.data.entity
 
-import com.codeartist.trivagochallenge.common.Utils
+import com.codeartist.trivagochallenge.common.utils.Utils
 import com.codeartist.trivagochallenge.common.baseentity.Convertable
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import com.google.gson.annotations.Expose

@@ -4,12 +4,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.codeartist.trivagochallenge.common.DataState
+import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.search.domain.usecase.SearchUseCase
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
-import javax.inject.Inject
 
 class SearchViewModel @ViewModelInject constructor(
     private val searchUseCase: SearchUseCase,

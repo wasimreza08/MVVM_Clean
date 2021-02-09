@@ -2,8 +2,10 @@ package com.codeartist.trivagochallenge.search.data.entity
 
 
 import com.codeartist.trivagochallenge.util.DummyDataProvider
+import junit.framework.Assert.assertNull
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Assert
 import org.junit.Test
 
 class ResultNetworkEntityTest {
@@ -33,11 +35,11 @@ class ResultNetworkEntityTest {
     @Test
     fun resultNetworkEntityTestWithNull() {
         val result = DummyDataProvider.nullResultDataProvider()
-        assertThat(result.name, equalTo(null))
-        assertThat(result.height, equalTo(null))
-        assertThat(result.birthYear, equalTo(null))
-        assertThat(result.homeworld, equalTo(null))
-        assertThat(result.films, equalTo(null))
-        assertThat(result.species, equalTo(null))
+        assertNull(result.name)
+        assertNull(result.height)
+        assertNull(result.birthYear)
+        assertNull(result.homeworld)
+        assertNull(result.films, )
+        assertNull(result.species)
     }
 }

@@ -1,8 +1,6 @@
 package com.codeartist.trivagochallenge.common.di
 
-import com.codeartist.trivagochallenge.common.Constants
-import com.codeartist.trivagochallenge.detail.data.remotesource.DetailAPI
-import com.codeartist.trivagochallenge.search.data.remotesource.RemoteAPI
+import com.codeartist.trivagochallenge.common.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

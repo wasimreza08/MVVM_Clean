@@ -12,16 +12,12 @@ data class SpeciesEntity(
     @SerializedName("language")
     @Expose
     var language: String?,
-    @SerializedName("homeworld")
-    @Expose
-    var homeWorld: String?
 
 ) : Convertable<SpeciesModel> {
     override fun convertTo(): SpeciesModel {
         return SpeciesModel(
             language = this.language.orEmpty(),
             name = this.name.orEmpty(),
-            homeWorld = this.homeWorld.orEmpty()
         )
     }
 }

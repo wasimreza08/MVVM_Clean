@@ -1,7 +1,7 @@
 package com.codeartist.trivagochallenge.search.domain.usecase
 
-import com.codeartist.trivagochallenge.common.DataState
-import com.codeartist.trivagochallenge.common.Status
+import com.codeartist.trivagochallenge.common.utils.DataState
+import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.domain.repository.SearchRepository
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import io.mockk.coEvery

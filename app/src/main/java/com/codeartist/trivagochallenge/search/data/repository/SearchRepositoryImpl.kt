@@ -1,6 +1,6 @@
 package com.codeartist.trivagochallenge.search.data.repository
 
-import com.codeartist.trivagochallenge.common.DataState
+import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.search.data.remotesource.RemoteAPI
 import com.codeartist.trivagochallenge.search.data.entity.SearchNetworkEntity
 import com.codeartist.trivagochallenge.search.domain.repository.SearchRepository

@@ -3,14 +3,13 @@ package com.codeartist.trivagochallenge.detail.presentation.view.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.common.activity.BaseActivity
-import com.codeartist.trivagochallenge.common.Constants
-import com.codeartist.trivagochallenge.common.Status
+import com.codeartist.trivagochallenge.common.utils.Constants
+import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.databinding.ActivityDetailBinding
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
@@ -70,19 +69,11 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
     private fun setRecyclerViewData(info: CharacterModel) {
         dataBinding.includeLayout.detailList.setHasFixedSize(true)
         dataBinding.includeLayout.detailList.layoutManager = LinearLayoutManager(this)
-        speciesHeaderAdapter.setText(getString(R.string.species))
-        filmHeaderAdapter.setText(getString(R.string.films))
-        homeWorldHeaderAdapter.setText(getString(R.string.home_world))
+
         characterInfoAdapter.setInfo(info)
         detailAdapter =
             ConcatAdapter(
-                characterInfoAdapter,
-                homeWorldHeaderAdapter,
-                homeWorldAdapter,
-                speciesHeaderAdapter,
-                speciesAdapter,
-                filmHeaderAdapter,
-                filmAdapter
+                characterInfoAdapter
             )
         dataBinding.includeLayout.detailList.adapter = detailAdapter
     }
@@ -105,9 +96,10 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
                     dataBinding.progressVisibility = true
                 } else if (it.status == Status.SUCCESS) {
                     it.data?.let {
-                        setFilmAdapter(it.filmList)
+                        setHomeWorldAdapter(it.planetModel)
                         setSpeciesAdapter(it.speciesList)
-                        setPopulationAdapter(it.planetModel)
+                        setFilmAdapter(it.filmList)
+                        dataBinding.includeLayout.detailList.adapter = detailAdapter
                         dataBinding.progressVisibility = false
                     }
                 } else {
@@ -125,26 +117,33 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
     }
 
     private fun setFilmAdapter(list: MutableList<FilmModel>) {
-        filmAdapter.setFilms(list)
+        if (list.isNotEmpty()) {
+            filmHeaderAdapter.setText(getString(R.string.films))
+            filmAdapter.setFilms(list)
+            detailAdapter.addAdapter(filmHeaderAdapter)
+            detailAdapter.addAdapter(filmAdapter)
+            Log.e(DetailActivity::class.java.simpleName, "setFilmAdapter added")
+        }
+
     }
 
     private fun setSpeciesAdapter(list: MutableList<SpeciesModel>) {
-        if (list.isEmpty()) {
-            detailAdapter.removeAdapter(speciesHeaderAdapter)
-            detailAdapter.removeAdapter(speciesAdapter)
-        } else {
+        if (list.isNotEmpty()) {
+            speciesHeaderAdapter.setText(getString(R.string.species))
             speciesAdapter.setSpeciesInfo(list)
+            detailAdapter.addAdapter(speciesHeaderAdapter)
+            detailAdapter.addAdapter(speciesAdapter)
+            Log.e(DetailActivity::class.java.simpleName, "setSpeciesAdapter added")
         }
     }
 
-    private fun setPopulationAdapter(planet: PlanetModel) {
-        if (planet.name.isEmpty() && planet.population.isEmpty()) {
-            detailAdapter.removeAdapter(homeWorldHeaderAdapter)
-            detailAdapter.removeAdapter(homeWorldAdapter)
-        } else {
-            homeWorldAdapter.setHomeWorld(
-                planet
-            )
+    private fun setHomeWorldAdapter(planet: PlanetModel) {
+        if (planet.name.isNotEmpty() && planet.population.isNotEmpty()) {
+            homeWorldHeaderAdapter.setText(getString(R.string.home_world))
+            homeWorldAdapter.setHomeWorld(planet)
+            detailAdapter.addAdapter(homeWorldHeaderAdapter)
+            detailAdapter.addAdapter(homeWorldAdapter)
+            Log.e(DetailActivity::class.java.simpleName, "setHomeWorldAdapter added")
         }
     }
 }

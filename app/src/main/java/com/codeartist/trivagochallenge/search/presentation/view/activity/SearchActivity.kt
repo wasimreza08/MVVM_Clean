@@ -10,8 +10,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.common.activity.BaseActivity
-import com.codeartist.trivagochallenge.common.Constants
-import com.codeartist.trivagochallenge.common.Status
+import com.codeartist.trivagochallenge.common.utils.Constants
+import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.databinding.ActivitySearchBinding
 import com.codeartist.trivagochallenge.detail.presentation.view.activity.DetailActivity
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel

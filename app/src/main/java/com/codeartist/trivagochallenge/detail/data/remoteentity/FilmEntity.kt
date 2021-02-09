@@ -1,6 +1,5 @@
 package com.codeartist.practicetest.data.remoteentity
 
-import android.util.Log
 import com.codeartist.trivagochallenge.common.baseentity.Convertable
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
 import com.google.gson.annotations.Expose
@@ -15,11 +14,9 @@ data class FilmEntity(
     var openingCrawl: String?
 ) : Convertable<FilmModel> {
     override fun convertTo(): FilmModel {
-        val test = this.openingCrawl.orEmpty().replace("[\r\n]", "")
-        Log.e("Description:", test)
         return FilmModel(
             title = this.title.orEmpty(),
-            description = this.openingCrawl.orEmpty().replace("[\r\n]", "")
+            description = this.openingCrawl.orEmpty()
         )
     }
 }

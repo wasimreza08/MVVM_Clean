@@ -2,8 +2,8 @@ package com.codeartist.trivagochallenge.search.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import com.codeartist.trivagochallenge.common.DataState
-import com.codeartist.trivagochallenge.common.Status
+import com.codeartist.trivagochallenge.common.utils.DataState
+import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.domain.usecase.SearchUseCase
 import com.codeartist.trivagochallenge.util.DummyDataProvider.singleCharacterDataProvider
 import com.codeartist.trivagochallenge.util.MainCoroutineRule

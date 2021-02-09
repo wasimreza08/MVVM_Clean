@@ -1,4 +1,4 @@
-package com.codeartist.trivagochallenge.common
+package com.codeartist.trivagochallenge.common.utils
 
 import java.math.RoundingMode
 import java.text.DecimalFormat
