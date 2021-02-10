@@ -9,11 +9,11 @@ import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.common.utils.Utils
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetFilmsUseCase
-import com.codeartist.trivagochallenge.detail.domain.usecases.GetPopulationUseCase
+import com.codeartist.trivagochallenge.detail.domain.usecases.GetHomeWorldUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetSpeciesUseCase
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FullDetailModel
-import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
+import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import kotlinx.coroutines.*
@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.*
 class DetailViewModel @ViewModelInject constructor(
     private val getFilmsUseCase: GetFilmsUseCase,
     private val getSpeciesUseCase: GetSpeciesUseCase,
-    private val getPopulationUseCase: GetPopulationUseCase,
+    private val getPopulationUseCase: GetHomeWorldUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -120,7 +120,7 @@ class DetailViewModel @ViewModelInject constructor(
         }
     }
 
-    private suspend fun getPopulation(link: String): PlanetModel {
+    private suspend fun getPopulation(link: String): HomeWorldModel {
         Utils.parseId(link).let { id ->
             val population = getPopulationUseCase.execute(id)
             when (population.status) {
@@ -134,7 +134,7 @@ class DetailViewModel @ViewModelInject constructor(
             }
             // Log.e(TAG, "job3 ends")
         }
-        return PlanetModel()
+        return HomeWorldModel()
 
     }
 

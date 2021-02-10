@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.search.data.repository
 
+import com.codeartist.trivagochallenge.detail.data.remotesource.DetailAPI
 import com.codeartist.trivagochallenge.search.data.remotesource.RemoteAPI
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -51,9 +52,15 @@ abstract class MockWebServerBaseTest {
         return String(file.readBytes())
     }
 
-    fun provideTestApiService(): RemoteAPI {
+    fun provideRemoteApiService(): RemoteAPI {
         return Retrofit.Builder().baseUrl(mockServer.url("/")).addConverterFactory(
             GsonConverterFactory.create())
             .client(OkHttpClient.Builder().build()).build().create(RemoteAPI::class.java)
+    }
+
+    fun provideDetailApiService(): DetailAPI {
+        return Retrofit.Builder().baseUrl(mockServer.url("/")).addConverterFactory(
+            GsonConverterFactory.create())
+            .client(OkHttpClient.Builder().build()).build().create(DetailAPI::class.java)
     }
 }

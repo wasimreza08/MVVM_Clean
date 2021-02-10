@@ -3,7 +3,7 @@ package com.codeartist.trivagochallenge.detail.presentation.view.adapter
 import androidx.databinding.ViewDataBinding
 import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemHomeworldBinding
-import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
+import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import com.dreampany.framework.ui.adapter.BaseAdapter
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class HomeWorldAdapter @Inject constructor() :
-    BaseAdapter<PlanetModel, HomeWorldAdapter.ViewHolder>() {
+    BaseAdapter<HomeWorldModel, HomeWorldAdapter.ViewHolder>() {
     override fun layoutId(viewType: Int) = R.layout.item_homeworld
 
     override fun createViewHolder(
@@ -21,8 +21,8 @@ class HomeWorldAdapter @Inject constructor() :
 
     inner class ViewHolder(
         val bind: ItemHomeworldBinding
-    ) : BaseAdapter.ViewHolder<PlanetModel, ViewHolder>(bind) {
-        override fun bindView(input: PlanetModel, position: Int) {
+    ) : BaseAdapter.ViewHolder<HomeWorldModel, ViewHolder>(bind) {
+        override fun bindView(input: HomeWorldModel, position: Int) {
             bind.homeWorld = input
             bind.executePendingBindings()
         }

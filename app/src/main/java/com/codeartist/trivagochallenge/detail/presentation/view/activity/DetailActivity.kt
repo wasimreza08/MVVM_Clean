@@ -12,7 +12,7 @@ import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.databinding.ActivityDetailBinding
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
-import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
+import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.detail.presentation.view.adapter.*
 import com.codeartist.trivagochallenge.detail.presentation.viewmodel.DetailViewModel
@@ -96,7 +96,7 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
                     dataBinding.progressVisibility = true
                 } else if (it.status == Status.SUCCESS) {
                     it.data?.let {
-                        setHomeWorldAdapter(it.planetModel)
+                        setHomeWorldAdapter(it.homeWorldModel)
                         setSpeciesAdapter(it.speciesList)
                         setFilmAdapter(it.filmList)
                         dataBinding.includeLayout.detailList.adapter = detailAdapter
@@ -137,7 +137,7 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
         }
     }
 
-    private fun setHomeWorldAdapter(planet: PlanetModel) {
+    private fun setHomeWorldAdapter(planet: HomeWorldModel) {
         if (planet.name.isNotEmpty() && planet.population.isNotEmpty()) {
             homeWorldHeaderAdapter.add(getString(R.string.home_world))
             homeWorldAdapter.add(planet)

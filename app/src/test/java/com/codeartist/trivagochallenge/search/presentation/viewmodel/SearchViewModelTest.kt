@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.domain.usecase.SearchUseCase
-import com.codeartist.trivagochallenge.util.DummyDataProvider.singleCharacterDataProvider
+import com.codeartist.trivagochallenge.util.DummyDataProvider.singleCharacterModelProvider
 import com.codeartist.trivagochallenge.util.MainCoroutineRule
 import com.codeartist.trivagochallenge.util.getOrAwaitValue
 import io.mockk.coEvery
@@ -43,7 +43,7 @@ class SearchViewModelTest {
             coEvery { searchUseCase.execute("adi") } coAnswers {
                 DataState.success(
                     mutableListOf(
-                        singleCharacterDataProvider()
+                        singleCharacterModelProvider()
                     )
                 )
             }

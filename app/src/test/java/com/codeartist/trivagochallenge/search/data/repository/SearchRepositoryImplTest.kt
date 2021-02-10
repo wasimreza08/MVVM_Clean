@@ -33,7 +33,7 @@ class SearchRepositoryImplTest : MockWebServerBaseTest() {
         mockWebServer = MockWebServer()
         mockWebServer.start()
         apiService =
-            provideTestApiService()
+            provideRemoteApiService()
         searchRepositoryImpl = SearchRepositoryImpl(apiService)
     }
 

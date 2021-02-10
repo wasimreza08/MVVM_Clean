@@ -5,7 +5,6 @@ import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.detail.domain.repository.DetailRepository
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
-import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
 import javax.inject.Inject
 
 class GetFilmsUseCase @Inject constructor(private val detailRepository: DetailRepository) :

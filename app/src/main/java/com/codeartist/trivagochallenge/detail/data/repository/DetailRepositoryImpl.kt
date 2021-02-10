@@ -6,40 +6,37 @@ import com.codeartist.trivagochallenge.detail.data.remoteentity.PlanetEntity
 import com.codeartist.trivagochallenge.detail.data.remoteentity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.data.remotesource.DetailAPI
 import com.codeartist.trivagochallenge.detail.domain.repository.DetailRepository
-import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
-import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
-import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import javax.inject.Inject
 
 class DetailRepositoryImpl @Inject constructor(private val detailAPI: DetailAPI) :
     DetailRepository {
 
     override suspend fun getFilm(id: Int): DataState<FilmEntity> {
-        try {
+        return try {
             val films = detailAPI.getFilms(id)
-            return DataState.success(films)
+            DataState.success(films)
         } catch (e: Throwable) {
-            return DataState.error(e.message)
+            DataState.error(e.message)
         }
     }
 
     override suspend fun getSpecies(id: Int): DataState<SpeciesEntity> {
-        try {
+        return try {
             val species = detailAPI.getSpecies(id)
             //Log.e("DetailRepositoryImpl", species.toString())
-            return DataState.success(species)
+            DataState.success(species)
         } catch (e: Throwable) {
-           // Log.e("DetailRepositoryImpl", e.message.toString())
-            return DataState.error(e.message)
+            // Log.e("DetailRepositoryImpl", e.message.toString())
+            DataState.error(e.message)
         }
     }
 
-    override suspend fun getPopulation(id: Int): DataState<PlanetEntity> {
-        try {
+    override suspend fun getHomeWorld(id: Int): DataState<PlanetEntity> {
+        return try {
             val planet = detailAPI.getPopulation(id)
-            return DataState.success(planet)
+            DataState.success(planet)
         } catch (e: Throwable) {
-            return DataState.error(e.message)
+            DataState.error(e.message)
         }
     }
 

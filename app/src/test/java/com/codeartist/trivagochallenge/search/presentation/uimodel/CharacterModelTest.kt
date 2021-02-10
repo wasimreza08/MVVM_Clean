@@ -16,9 +16,10 @@ class CharacterModelTest {
     )
     var species: List<String> = listOf("http://swapi.dev/api/species/23/")
 
+
     @Test
     fun characterModelTestWithData() {
-        val result = DummyDataProvider.singleCharacterDataProvider()
+        val result = DummyDataProvider.singleCharacterModelProvider()
         MatcherAssert.assertThat(result.name, equalTo(name))
         MatcherAssert.assertThat(result.height, equalTo(height))
         MatcherAssert.assertThat(result.birthYear, equalTo(birthYear))

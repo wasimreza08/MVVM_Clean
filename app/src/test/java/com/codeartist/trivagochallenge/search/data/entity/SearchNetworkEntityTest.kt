@@ -39,8 +39,7 @@ class SearchNetworkEntityTest {
         )
         assertThat(
             searchModel.get(0).height,
-            equalTo(DummyDataProvider.singleResultDataProvider().height?.toInt()?.let {
-                DummyDataProvider.singleResultDataProvider().height+" cm or "+
+            equalTo(DummyDataProvider.singleResultDataProvider().height?.let {
                 Utils.cmToFeetInches(
                     it
                 )
@@ -58,12 +57,49 @@ class SearchNetworkEntityTest {
             searchModel.get(0).films,
             equalTo(DummyDataProvider.singleResultDataProvider().films)
         )
-        assertThat(searchModel.get(0).films?.size, equalTo(2))
+        assertThat(searchModel.get(0).films.size, equalTo(2))
         assertThat(
             searchModel.get(0).species,
             equalTo(DummyDataProvider.singleResultDataProvider().species)
         )
-        assertThat(searchModel.get(0).species?.size, equalTo(1))
+        assertThat(searchModel.get(0).species.size, equalTo(1))
+
+    }
+
+    @Test
+    fun `Given nonEmpty list with unknown height ConvertTo nonEmpty list`() {
+        val entity = SearchNetworkEntity(mutableListOf(DummyDataProvider.singleResultProviderWithUnknownHeight()))
+        val searchModel = entity.convertTo()
+        assertThat(
+            searchModel.get(0).name,
+            equalTo(entity.results?.get(0)?.name)
+        )
+        assertThat(
+            searchModel.get(0).height,
+            equalTo(entity.results?.get(0)?.height?.let {
+                Utils.cmToFeetInches(
+                    it
+                )
+            })
+        )
+        assertThat(
+            searchModel.get(0).birthYear,
+            equalTo(DummyDataProvider.singleResultDataProvider().birthYear)
+        )
+        assertThat(
+            searchModel.get(0).homeWorld,
+            equalTo(DummyDataProvider.singleResultDataProvider().homeworld)
+        )
+        assertThat(
+            searchModel.get(0).films,
+            equalTo(DummyDataProvider.singleResultDataProvider().films)
+        )
+        assertThat(searchModel.get(0).films.size, equalTo(2))
+        assertThat(
+            searchModel.get(0).species,
+            equalTo(DummyDataProvider.singleResultDataProvider().species)
+        )
+        assertThat(searchModel.get(0).species.size, equalTo(1))
 
     }
     @Test

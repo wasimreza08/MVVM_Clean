@@ -24,11 +24,24 @@ object DummyDataProvider {
         return ResultNetworkEntity(name, height, birthYear, homeworld, films, species)
     }
 
-    fun singleCharacterDataProvider(): CharacterModel {
-        var name: String = "Adi Gallia"
-        var height: String = "184"
-        var birthYear: String = "unknown"
-        var homeworld: String = ""
+    fun singleResultProviderWithUnknownHeight(): ResultNetworkEntity {
+        var name: String? = "Adi Gallia"
+        var height: String? = "unknown"
+        var birthYear: String? = "unknown"
+        var homeworld: String? = ""
+        var films: List<String>? = listOf(
+            "http://swapi.dev/api/films/4/",
+            "http://swapi.dev/api/films/6/"
+        )
+        var species: List<String>? = listOf("http://swapi.dev/api/species/23/")
+        return ResultNetworkEntity(name, height, birthYear, homeworld, films, species)
+    }
+
+    fun singleCharacterModelProvider(): CharacterModel {
+        var name = "Adi Gallia"
+        var height = "184"
+        var birthYear = "unknown"
+        var homeworld = ""
         var films: List<String> = listOf(
             "http://swapi.dev/api/films/4/",
             "http://swapi.dev/api/films/6/"
@@ -73,6 +86,7 @@ object DummyDataProvider {
     fun filmEntityProviderWithSingleItem(): FilmEntity {
         return FilmEntity(
             title = "A New Hope",
+            url = "http://swapi.dev/api/films/1/",
             openingCrawl = "It is a dark time for the\\r\\nRebellion. Although the Death\\r\\nStar " +
                     "has been destroyed,\\r\\nImperial troops have driven the\\r\\nRebel forces from their hidden\\r\\nbase and pursued them across\\r\\nthe galaxy.\\r\\n\\r\\nEvading the dreaded Imperial\\r\\nStarfleet, a group of freedom\\r\\nfighters led by Luke Skywalker\\r\\nhas established a new secret\\r\\nbase on the remote ice world\\r\\nof Hoth.\\r\\n\\r\\nThe evil lord Darth Vader,\\r\\nobsessed with finding young\\r\\nSkywalker, has dispatched\\r\\nthousands of remote probes into\\r\\nthe far reaches of space...."
         )
@@ -81,6 +95,7 @@ object DummyDataProvider {
     fun filmModelProviderWithSingleItem(): FilmModel {
         return FilmModel(
             title = "A New Hope",
+            url = "https://swapi.dev/api/films/1/",
             description = "It is a dark time for the\\r\\nRebellion. Although the Death\\r\\nStar " +
                     "has been destroyed,\\r\\nImperial troops have driven the\\r\\nRebel forces from their hidden\\r\\nbase and pursued them across\\r\\nthe galaxy.\\r\\n\\r\\nEvading the dreaded Imperial\\r\\nStarfleet, a group of freedom\\r\\nfighters led by Luke Skywalker\\r\\nhas established a new secret\\r\\nbase on the remote ice world\\r\\nof Hoth.\\r\\n\\r\\nThe evil lord Darth Vader,\\r\\nobsessed with finding young\\r\\nSkywalker, has dispatched\\r\\nthousands of remote probes into\\r\\nthe far reaches of space...."
         )
