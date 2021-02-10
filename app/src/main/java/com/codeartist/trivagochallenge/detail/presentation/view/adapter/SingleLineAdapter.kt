@@ -1,51 +1,30 @@
 package com.codeartist.trivagochallenge.detail.presentation.view.adapter
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.ViewDataBinding
+import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemSingleLineBinding
+import com.dreampany.framework.ui.adapter.BaseAdapter
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 
+@ActivityScoped
 class SingleLineAdapter @Inject constructor() :
-    RecyclerView.Adapter<SingleLineAdapter.ViewHolder>() {
+    BaseAdapter<String, SingleLineAdapter.ViewHolder>() {
+    override fun layoutId(viewType: Int) = R.layout.item_single_line
 
-    private var textString: String = ""
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemSingleLineBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
+    override fun createViewHolder(
+        bind: ViewDataBinding,
+        viewType: Int
+    ) = ViewHolder(bind as ItemSingleLineBinding)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(textString)
-    }
-
-    override fun getItemCount(): Int {
-        return 1
-    }
-
-    fun setText(header: String) {
-        textString = header
-    }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        lateinit var binding: ItemSingleLineBinding
-
-        constructor(binding: ItemSingleLineBinding) : this(binding.root) {
-            this.binding = binding
-        }
-
-        fun bind(text: String) {
-            binding.text = text
-            binding.executePendingBindings()
+    inner class ViewHolder(
+        val bind: ItemSingleLineBinding
+    ) : BaseAdapter.ViewHolder<String, ViewHolder>(bind) {
+        override fun bindView(input: String, position: Int) {
+            bind.text = input
+            bind.executePendingBindings()
         }
     }
 
 }
-

@@ -1,50 +1,27 @@
 package com.codeartist.trivagochallenge.detail.presentation.view.adapter
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.ViewDataBinding
+import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemSpeciesBinding
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
-import dagger.hilt.android.scopes.ActivityScoped
+import com.dreampany.framework.ui.adapter.BaseAdapter
 import javax.inject.Inject
 
-@ActivityScoped
 class SpeciesAdapter @Inject constructor() :
-    RecyclerView.Adapter<SpeciesAdapter.ViewHolder>() {
-    val species: MutableList<SpeciesModel> = mutableListOf()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemSpeciesBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
-        )
-    }
+    BaseAdapter<SpeciesModel, SpeciesAdapter.ViewHolder>() {
+    override fun layoutId(viewType: Int) = R.layout.item_species
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(species.get(position))
-    }
+    override fun createViewHolder(
+        bind: ViewDataBinding,
+        viewType: Int
+    ) = ViewHolder(bind as ItemSpeciesBinding)
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        lateinit var binding: ItemSpeciesBinding
-
-        constructor(binding: ItemSpeciesBinding) : this(binding.root) {
-            this.binding = binding
-
+    inner class ViewHolder(
+        val bind: ItemSpeciesBinding
+    ) : BaseAdapter.ViewHolder<SpeciesModel, ViewHolder>(bind) {
+        override fun bindView(input: SpeciesModel, position: Int) {
+            bind.species = input
+            bind.executePendingBindings()
         }
-
-        fun bind(item: SpeciesModel) {
-            binding.species = item
-            binding.executePendingBindings()
-        }
-    }
-
-    fun setSpeciesInfo(list : MutableList<SpeciesModel>){
-        species.clear()
-        species.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int {
-        return species.size
     }
 }

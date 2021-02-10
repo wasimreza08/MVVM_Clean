@@ -1,50 +1,31 @@
 package com.codeartist.trivagochallenge.detail.presentation.view.adapter
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.ViewDataBinding
+import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemFilmBinding
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
+import com.dreampany.framework.ui.adapter.BaseAdapter
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @ActivityScoped
+
 class FilmAdapter @Inject constructor() :
-    RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
-    val films: MutableList<FilmModel> = mutableListOf()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemFilmBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
-        )
-    }
+    BaseAdapter<FilmModel, FilmAdapter.ViewHolder>() {
+    override fun layoutId(viewType: Int) = R.layout.item_film
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(films.get(position))
-    }
+    override fun createViewHolder(
+        bind: ViewDataBinding,
+        viewType: Int
+    ) = ViewHolder(bind as ItemFilmBinding)
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        lateinit var binding: ItemFilmBinding
-
-        constructor(binding: ItemFilmBinding) : this(binding.root) {
-            this.binding = binding
-
-        }
-
-        fun bind(item: FilmModel) {
-            binding.film = item
-            binding.executePendingBindings()
+    inner class ViewHolder(
+        val bind: ItemFilmBinding
+    ) : BaseAdapter.ViewHolder<FilmModel, ViewHolder>(bind) {
+        override fun bindView(input: FilmModel, position: Int) {
+            bind.film = input
+            bind.executePendingBindings()
         }
     }
 
-    fun setFilms(list : MutableList<FilmModel>){
-        films.clear()
-        films.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int {
-        return films.size
-    }
 }

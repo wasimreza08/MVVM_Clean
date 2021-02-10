@@ -18,7 +18,7 @@ data class SearchNetworkEntity(
             it.map {
                 CharacterModel(
                     name = it.name.orEmpty(),
-                    height = it.height?.let { it + " cm or " + Utils.cmToFeetInches(it.toInt()) }
+                    height = it.height?.let { Utils.cmToFeetInches(it) }
                         ?: "",
                     birthYear = it.birthYear.orEmpty(),
                     homeWorld = it.homeworld.orEmpty(),

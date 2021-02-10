@@ -7,6 +7,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
+import com.codeartist.trivagochallenge.common.utils.Utils
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetFilmsUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetPopulationUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetSpeciesUseCase
@@ -16,7 +17,7 @@ import com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.*
 
 class DetailViewModel @ViewModelInject constructor(
     private val getFilmsUseCase: GetFilmsUseCase,
@@ -30,17 +31,18 @@ class DetailViewModel @ViewModelInject constructor(
         @VisibleForTesting set
     private val _isError = MutableLiveData(false)
     val isError: LiveData<Boolean> = _isError
-    private val errorCollector: MutableList<Boolean> = mutableListOf()
 
     private val _characterModel: MutableLiveData<CharacterModel> = MutableLiveData()
     val detailInfo: LiveData<DataState<FullDetailModel>> = _characterModel.switchMap {
         liveData(context = viewModelScope.coroutineContext + defaultDispatcher) {
             emit(DataState.loading())
             val planetInfo =
-                viewModelScope.async(Dispatchers.IO) { getPopulation(it.homeWorld) }
-            val filmInfo = viewModelScope.async(Dispatchers.IO) { getFilms(it.films) }
-            val speciesInfo = viewModelScope.async(Dispatchers.IO) { getSpecies(it.species) }
-            errorIdentifier()
+                viewModelScope.async(defaultDispatcher) { getPopulation(it.homeWorld) }
+            val filmInfo = viewModelScope.async(defaultDispatcher) {// getFilms(it.films)
+                getFilmList(it.films)
+            }
+            val speciesInfo = viewModelScope.async(defaultDispatcher) { getSpeciesList(it.species) }
+
             val detailData = FullDetailModel(
                 filmInfo.await(), speciesInfo.await(),
                 planetInfo.await()
@@ -51,109 +53,75 @@ class DetailViewModel @ViewModelInject constructor(
                 )
             )
         }
-
     }
 
-    private fun errorIdentifier() {
-        _isError.postValue(errorCollector.contains(true))
-    }
 
-    private suspend fun getFilms2(films: List<String>?): MutableList<FilmModel> {
-
-        films?.let {
-            val list = it.map {
-                parseId(it)?.let {
-                    viewModelScope.async(Dispatchers.IO) {
-                        Log.e("collection films", it.toString())
-                        getFilmsUseCase.execute(it)
-                        //Log.e("films collection", "it")
-                    }
-                }
-            }.filterNotNull().onEach {
-                if (it.await().status == Status.ERROR) {
-                    errorCollector.add(true)
-                }
-            }.map { it.await().data }
-                .filterNotNull()
-            return list.toMutableList()
+    @FlowPreview
+    private suspend fun getFilmList(films: List<String>?): MutableList<FilmModel> {
+        val list: MutableList<FilmModel> = mutableListOf()
+        val ids = films?.let { it.map { Utils.parseId(it) } }
+        getEachFilm(ids).buffer().collect {
+            it.let {
+                list.add(it)
+                //  println("film model ${it.url}")
+            }
         }
-        return emptyList<FilmModel>().toMutableList()
+        return list
     }
 
-
-    private suspend fun getFilms(films: List<String>?): MutableList<FilmModel> {
-        films?.let {
-            val list = it.map {
-                parseId(it)?.let {
-                    viewModelScope.async(Dispatchers.IO) {
-                        Log.e("collection films", it.toString())
-                        getFilmsUseCase.execute(it)
-                        //Log.e("films collection", "it")
-                    }
+    @FlowPreview
+    private suspend fun getEachFilm(ids: List<Int>?) = flow {
+        ids?.let {
+            it.asFlow().buffer().flowOn(defaultDispatcher).flatMapMerge {
+                // println("film model $it")
+                flow {
+                    emit(getFilmsUseCase.execute(it))
                 }
-            }.filterNotNull().onEach {
-                if (it.await().status == Status.ERROR) {
-                    errorCollector.add(true)
+            }.onEach {
+                if (it.status == Status.ERROR) {
+                    _isError.postValue(true)
                 }
-            }.map { it.await().data }
-                .filterNotNull()
-            return list.toMutableList()
+            }.filter { it.status == Status.SUCCESS }.collect {
+                it.data?.let { emit(it) }
+            }
         }
-        return emptyList<FilmModel>().toMutableList()
     }
 
-    private suspend fun getSpecies(speciesUrl: List<String>?): MutableList<SpeciesModel> {
-        speciesUrl?.let {
-            val list = it.map {
-                parseId(it)?.let {
-                    viewModelScope.async(Dispatchers.IO) {
-                        Log.e("collection species", it.toString())
-                        getSpeciesUseCase.execute(it)
-                        //Log.e("films collection", "it")
-                    }
-                }
-            }.filterNotNull().onEach {
-                if (it.await().status == Status.ERROR) {
-                    errorCollector.add(true)
-                    /*  _isError.postValue(
-                          true
-                      )*/
-                }
-            }.map { it.await().data }
-                .filterNotNull()
-            Log.e("species list", list.toString())
-            //_speciesList.postValue(list.toMutableList())
-            return list.toMutableList()
+
+    @FlowPreview
+    private suspend fun getSpeciesList(specise: List<String>?): MutableList<SpeciesModel> {
+        val list: MutableList<SpeciesModel> = mutableListOf()
+        val ids = specise?.let { it.map { Utils.parseId(it) } }
+        getEachSpecies(ids).buffer().collect {
+            it.let {
+                list.add(it)
+                println("species model ${it}")
+            }
         }
-        return emptyList<SpeciesModel>().toMutableList()
+        return list
     }
 
+    @FlowPreview
+    private suspend fun getEachSpecies(ids: List<Int>?) = flow {
+        ids?.let {
+            it.asFlow().buffer().flowOn(defaultDispatcher).flatMapMerge {
+                println("species model $it")
+                flow {
+                    emit(getSpeciesUseCase.execute(it))
+                }
+            }.onEach {
+                if (it.status == Status.ERROR) {
+                    _isError.postValue(true)
+                }
+            }.filter { it.status == Status.SUCCESS }.collect {
+                it.data?.let { emit(it) }
+                //println("film model $it")
+            }
+        }
+    }
 
-    /* private suspend fun getSpecie(link: String?) {
-         parseId(link)?.let {
-             val speciesInfo = getSpeciesUseCase.execute(it)
-             when (speciesInfo.status) {
-                 Status.SUCCESS -> speciesInfo.data?.let {
-                     _isError.postValue(false)
-                     val list = _speciesList.value
-                     list?.add(it)
-                     _speciesList.postValue(list)
-                 }
-                 Status.ERROR -> _isError.postValue(true)
-                 else -> return
-                 //Log.e(TAG, "job2 ends")
-             }
-         }
-     }*/
-
-    /*  private suspend fun getSpecies(species: List<String>?) {
-          species?.let {
-              it.forEach { getSpecie(it) }
-          }
-      }*/
-
-    private suspend fun getPopulation(link: String?): PlanetModel {
-        parseId(link)?.let { id ->
+    private suspend fun getPopulation(link: String): PlanetModel {
+        Utils.parseId(link).let { id ->
             val population = getPopulationUseCase.execute(id)
             when (population.status) {
                 Status.SUCCESS -> population.data?.let {
@@ -161,9 +129,7 @@ class DetailViewModel @ViewModelInject constructor(
                     Log.e("collection population", id.toString())
                     return it
                 }
-                Status.ERROR -> errorCollector.add(true)
-                else -> {
-                }
+                else -> _isError.postValue(true)
 
             }
             // Log.e(TAG, "job3 ends")
@@ -174,22 +140,5 @@ class DetailViewModel @ViewModelInject constructor(
 
     fun setCharacterInfo(info: CharacterModel) {
         _characterModel.value = info
-    }
-
-
-    /*fun collectCharacterDetail(info: CharacterModel) {
-        val jobs: MutableList<Job> = mutableListOf()
-        viewModelScope.launch {
-            jobs.add(viewModelScope.launch(Dispatchers.IO) { getFilms(info.films) })
-            jobs.add(viewModelScope.launch(Dispatchers.IO) { getSpecies(info.species) })
-            jobs.add(viewModelScope.launch(Dispatchers.IO) { getPopulation(info.homeWorld) })
-            jobs.joinAll()
-        }
-    }*/
-
-
-    private fun parseId(link: String?): Int? {
-        val url = link?.split("/")
-        return url?.get(url.size - 2)?.toInt()
     }
 }

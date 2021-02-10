@@ -1,56 +1,30 @@
 package com.codeartist.trivagochallenge.detail.presentation.view.adapter
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.databinding.ViewDataBinding
+import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemCharacterInfoBinding
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
+import com.dreampany.framework.ui.adapter.BaseAdapter
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-
+@ActivityScoped
 class CharacterInfoAdapter @Inject constructor() :
-    RecyclerView.Adapter<CharacterInfoAdapter.ViewHolder>() {
+    BaseAdapter<CharacterModel, CharacterInfoAdapter.ViewHolder>() {
+    override fun layoutId(viewType: Int) = R.layout.item_character_info
 
-    private lateinit var character: CharacterModel
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemCharacterInfoBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
+    override fun createViewHolder(
+        bind: ViewDataBinding,
+        viewType: Int
+    ) = ViewHolder(bind as ItemCharacterInfoBinding)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(character)
-    }
-
-    override fun getItemCount(): Int {
-        return 1
-    }
-
-    fun setInfo(item: CharacterModel?) {
-        item?.let {
-            character = item
-            notifyDataSetChanged()
-        }
-
-    }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        lateinit var binding: ItemCharacterInfoBinding
-
-        constructor(binding: ItemCharacterInfoBinding) : this(binding.root) {
-            this.binding = binding
-        }
-
-        fun bind(item: CharacterModel) {
-            binding.characterInfo = item
-            binding.executePendingBindings()
+    inner class ViewHolder(
+        val bind: ItemCharacterInfoBinding
+    ) : BaseAdapter.ViewHolder<CharacterModel, ViewHolder>(bind) {
+        override fun bindView(input: CharacterModel, position: Int) {
+            bind.characterInfo = input
+            bind.executePendingBindings()
         }
     }
 
 }
-

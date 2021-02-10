@@ -70,7 +70,7 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
         dataBinding.includeLayout.detailList.setHasFixedSize(true)
         dataBinding.includeLayout.detailList.layoutManager = LinearLayoutManager(this)
 
-        characterInfoAdapter.setInfo(info)
+        characterInfoAdapter.add(info)
         detailAdapter =
             ConcatAdapter(
                 characterInfoAdapter
@@ -118,8 +118,8 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
 
     private fun setFilmAdapter(list: MutableList<FilmModel>) {
         if (list.isNotEmpty()) {
-            filmHeaderAdapter.setText(getString(R.string.films))
-            filmAdapter.setFilms(list)
+            filmHeaderAdapter.add(getString(R.string.films))
+            filmAdapter.addAll(list)
             detailAdapter.addAdapter(filmHeaderAdapter)
             detailAdapter.addAdapter(filmAdapter)
             Log.e(DetailActivity::class.java.simpleName, "setFilmAdapter added")
@@ -129,8 +129,8 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
 
     private fun setSpeciesAdapter(list: MutableList<SpeciesModel>) {
         if (list.isNotEmpty()) {
-            speciesHeaderAdapter.setText(getString(R.string.species))
-            speciesAdapter.setSpeciesInfo(list)
+            speciesHeaderAdapter.add(getString(R.string.species))
+            speciesAdapter.addAll(list)
             detailAdapter.addAdapter(speciesHeaderAdapter)
             detailAdapter.addAdapter(speciesAdapter)
             Log.e(DetailActivity::class.java.simpleName, "setSpeciesAdapter added")
@@ -139,8 +139,8 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
 
     private fun setHomeWorldAdapter(planet: PlanetModel) {
         if (planet.name.isNotEmpty() && planet.population.isNotEmpty()) {
-            homeWorldHeaderAdapter.setText(getString(R.string.home_world))
-            homeWorldAdapter.setHomeWorld(planet)
+            homeWorldHeaderAdapter.add(getString(R.string.home_world))
+            homeWorldAdapter.add(planet)
             detailAdapter.addAdapter(homeWorldHeaderAdapter)
             detailAdapter.addAdapter(homeWorldAdapter)
             Log.e(DetailActivity::class.java.simpleName, "setHomeWorldAdapter added")
