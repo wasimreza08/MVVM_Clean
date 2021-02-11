@@ -6,6 +6,7 @@ import com.codeartist.trivagochallenge.detail.domain.repository.DetailRepository
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.junit.Before
@@ -34,8 +35,8 @@ class GetSpeciesUseCaseTest {
 
             //println(mockSearchRepositoryImpl.searchCharacter("adi"))
             val dataState = getSpeciesUseCase.execute(1)
-            assertThat(dataState.status, CoreMatchers.equalTo(Status.SUCCESS))
-            assertNotNull(dataState.data)
+            assertThat(dataState.first().status, CoreMatchers.equalTo(Status.SUCCESS))
+            assertNotNull(dataState.first().data)
             //assertThat(dataState.data?.size, CoreMatchers.equalTo(1))
         }
 
@@ -46,8 +47,8 @@ class GetSpeciesUseCaseTest {
                 (DataState.error("exception"))
             }
             val dataState = getSpeciesUseCase.execute(-1)
-            assertThat(dataState.status, CoreMatchers.equalTo(Status.ERROR))
-            assertNull(dataState.data)
-            assertThat(dataState.message, CoreMatchers.equalTo("exception"))
+            assertThat(dataState.first().status, CoreMatchers.equalTo(Status.ERROR))
+            assertNull(dataState.first().data)
+            assertThat(dataState.first().message, CoreMatchers.equalTo("exception"))
         }
 }

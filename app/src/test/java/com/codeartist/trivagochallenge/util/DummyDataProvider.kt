@@ -4,6 +4,7 @@ import com.codeartist.practicetest.data.remoteentity.FilmEntity
 import com.codeartist.trivagochallenge.detail.data.remoteentity.PlanetEntity
 import com.codeartist.trivagochallenge.detail.data.remoteentity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
+import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.search.data.entity.ResultNetworkEntity
 import com.codeartist.trivagochallenge.search.data.entity.SearchNetworkEntity
@@ -112,4 +113,18 @@ object DummyDataProvider {
     fun provideSingleSpeciesModel(): SpeciesModel {
         return SpeciesModel(name = "Droid", language = "n/a")
     }
+    fun provideSingleHomeWorldModel(): HomeWorldModel {
+        return HomeWorldModel("Tatooine", "200000")
+    }
+
+    fun characterModelProviderForDetail(): CharacterModel {
+        var name = "Luke Skywalker"
+        var height = "172"
+        var birthYear = "19BBY"
+        var homeworld = "http://swapi.dev/api/planets/1/"
+        var films: List<String> = listOf("http://swapi.dev/api/films/1/")
+        var species: List<String> = listOf("http://swapi.dev/api/species/1/")
+        return CharacterModel(name, height, birthYear, homeworld, films, species)
+    }
+
 }

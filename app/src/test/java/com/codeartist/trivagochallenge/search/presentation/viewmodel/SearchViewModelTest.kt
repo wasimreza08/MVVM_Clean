@@ -8,6 +8,7 @@ import com.codeartist.trivagochallenge.search.domain.usecase.SearchUseCase
 import com.codeartist.trivagochallenge.util.DummyDataProvider.singleCharacterModelProvider
 import com.codeartist.trivagochallenge.util.MainCoroutineRule
 import com.codeartist.trivagochallenge.util.getOrAwaitValue
+import com.codeartist.trivagochallenge.util.runBlockingTest
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -111,9 +112,5 @@ class SearchViewModelTest {
             // println(searchViewModel.searchResult.getOrAwaitValue().status)
         }
 
-    @ExperimentalCoroutinesApi
-    private fun MainCoroutineRule.runBlockingTest(block: suspend () -> Unit) =
-        this.testDispatcher.runBlockingTest {
-            block()
-        }
+
 }

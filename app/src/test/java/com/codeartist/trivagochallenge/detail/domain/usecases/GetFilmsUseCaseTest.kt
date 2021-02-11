@@ -8,6 +8,7 @@ import com.codeartist.trivagochallenge.search.domain.usecase.SearchUseCase
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.junit.Before
@@ -35,8 +36,8 @@ class GetFilmsUseCaseTest {
 
             //println(mockSearchRepositoryImpl.searchCharacter("adi"))
             val dataState = getFilmUseCase.execute(1)
-            assertThat(dataState.status, CoreMatchers.equalTo(Status.SUCCESS))
-            assertNotNull(dataState.data)
+            assertThat(dataState.first().status, CoreMatchers.equalTo(Status.SUCCESS))
+            assertNotNull(dataState.first().data)
             //assertThat(dataState.data?.size, CoreMatchers.equalTo(1))
         }
 
@@ -47,8 +48,8 @@ class GetFilmsUseCaseTest {
                 (DataState.error("exception"))
             }
             val dataState = getFilmUseCase.execute(-1)
-            assertThat(dataState.status, CoreMatchers.equalTo(Status.ERROR))
-            assertNull(dataState.data)
-            assertThat(dataState.message, CoreMatchers.equalTo("exception"))
+            assertThat(dataState.first().status, CoreMatchers.equalTo(Status.ERROR))
+            assertNull(dataState.first().data)
+            assertThat(dataState.first().message, CoreMatchers.equalTo("exception"))
         }
 }
