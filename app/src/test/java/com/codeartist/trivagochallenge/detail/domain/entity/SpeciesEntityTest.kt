@@ -1,5 +1,6 @@
-package com.codeartist.trivagochallenge.detail.data.remoteentity
+package com.codeartist.trivagochallenge.detail.domain.entity
 
+import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertNull

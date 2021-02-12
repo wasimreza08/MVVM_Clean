@@ -4,7 +4,6 @@ import androidx.databinding.ViewDataBinding
 import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemFilmBinding
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
-import com.dreampany.framework.ui.adapter.BaseAdapter
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 

@@ -3,7 +3,6 @@ package com.codeartist.trivagochallenge.detail.presentation.view.adapter
 import androidx.databinding.ViewDataBinding
 import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemSingleLineBinding
-import com.dreampany.framework.ui.adapter.BaseAdapter
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 

@@ -38,7 +38,7 @@ class SearchRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `Given error search entity return error DataState with null`() = runBlocking{
+    fun `test searchCharacter with exceptions return null data`() = runBlocking{
         mockHttpResponse(
             "failed_response.json",
             HttpURLConnection.HTTP_BAD_REQUEST
@@ -50,10 +50,11 @@ class SearchRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `Given valid search entity return success DataState with data`() = runBlocking {
+    fun `test searchCharacter with success reposonse return non null data`() = runBlocking {
         mockHttpResponse(
             "success_response.json",
             HttpURLConnection.HTTP_OK
+
         )
         val dataState = searchRepositoryImpl.searchCharacter("adi")
         println(dataState)

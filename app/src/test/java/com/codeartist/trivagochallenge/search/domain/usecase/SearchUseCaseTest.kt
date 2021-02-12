@@ -25,7 +25,7 @@ class SearchUseCaseTest {
     }
 
     @Test
-    fun `Given valid SearchEntity list to execute return CharacterModel datastate`() =
+    fun `test execute with non empty entity return CharacterModel datastate`() =
         runBlockingTest {
             println(mockSearchRepositoryImpl)
             coEvery { (mockSearchRepositoryImpl.searchCharacter("adi")) } coAnswers {
@@ -40,7 +40,7 @@ class SearchUseCaseTest {
         }
 
     @Test
-    fun `Given null SearchEntity list to execute return charactermodel datastate`() =
+    fun `test execute with exception return null charactermodel`() =
         runBlockingTest {
             coEvery { (mockSearchRepositoryImpl.searchCharacter("")) } coAnswers {
                 (DataState.error("exception"))

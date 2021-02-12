@@ -1,15 +1,14 @@
 package com.codeartist.trivagochallenge.util
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
-import com.codeartist.trivagochallenge.detail.data.remoteentity.PlanetEntity
-import com.codeartist.trivagochallenge.detail.data.remoteentity.SpeciesEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.PlanetEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
-import com.codeartist.trivagochallenge.search.data.entity.ResultNetworkEntity
-import com.codeartist.trivagochallenge.search.data.entity.SearchNetworkEntity
+import com.codeartist.trivagochallenge.search.domain.entity.ResultNetworkEntity
+import com.codeartist.trivagochallenge.search.domain.entity.SearchNetworkEntity
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
-import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModelTest
 
 object DummyDataProvider {
     fun singleResultDataProvider(): ResultNetworkEntity {

@@ -1,4 +1,4 @@
-package com.codeartist.trivagochallenge.common.di
+package com.codeartist.trivagochallenge.common.base.di
 
 import com.codeartist.trivagochallenge.common.utils.Constants
 import dagger.Module

@@ -18,7 +18,7 @@ class CharacterModelTest {
 
 
     @Test
-    fun characterModelTestWithData() {
+    fun `test characterModel with data`() {
         val result = DummyDataProvider.singleCharacterModelProvider()
         MatcherAssert.assertThat(result.name, equalTo(name))
         MatcherAssert.assertThat(result.height, equalTo(height))

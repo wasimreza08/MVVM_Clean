@@ -1,6 +1,5 @@
 package com.codeartist.trivagochallenge.detail.di
 
-import com.codeartist.trivagochallenge.common.di.RetrofitModule
 import com.codeartist.trivagochallenge.detail.data.remotesource.DetailAPI
 import dagger.Module
 import dagger.Provides

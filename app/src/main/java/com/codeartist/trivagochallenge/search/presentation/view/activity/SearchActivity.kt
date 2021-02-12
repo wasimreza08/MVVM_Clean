@@ -9,7 +9,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.codeartist.trivagochallenge.R
-import com.codeartist.trivagochallenge.common.activity.BaseActivity
+import com.codeartist.trivagochallenge.common.base.activity.BaseActivity
 import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.databinding.ActivitySearchBinding

@@ -2,8 +2,8 @@ package com.codeartist.trivagochallenge.detail.domain.repository
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
 import com.codeartist.trivagochallenge.common.utils.DataState
-import com.codeartist.trivagochallenge.detail.data.remoteentity.PlanetEntity
-import com.codeartist.trivagochallenge.detail.data.remoteentity.SpeciesEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.PlanetEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 
 interface DetailRepository {
     suspend fun getFilm(id:Int): DataState<FilmEntity>

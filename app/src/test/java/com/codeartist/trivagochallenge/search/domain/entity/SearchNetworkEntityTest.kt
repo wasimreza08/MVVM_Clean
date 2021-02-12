@@ -1,4 +1,4 @@
-package com.codeartist.trivagochallenge.search.data.entity
+package com.codeartist.trivagochallenge.search.domain.entity
 
 import com.codeartist.trivagochallenge.common.utils.Utils
 import com.codeartist.trivagochallenge.util.DummyDataProvider
@@ -8,7 +8,7 @@ import org.junit.Test
 
 class SearchNetworkEntityTest {
     @Test
-    fun `Given valid list to SearchNetworkEntity return valid list`() {
+    fun `test SearchNetworkEntity with non null list`() {
         val entity = SearchNetworkEntity(DummyDataProvider.searchResultListWithTwoItemsProvider())
         assertThat(
             entity.results,
@@ -21,7 +21,7 @@ class SearchNetworkEntityTest {
     }
 
     @Test
-    fun `Given null to SearchNetworkEntity return null`() {
+    fun `test SearchNetworkEntity with null return null`() {
         val entity = SearchNetworkEntity(null)
         assertThat(
             entity.results,
@@ -30,7 +30,7 @@ class SearchNetworkEntityTest {
     }
 
     @Test
-    fun `Given valid list to ConvertToFunction return Valid list`() {
+    fun `test convertTo with searchNetworkEntity list return list of searchModel`() {
         val entity = SearchNetworkEntity(DummyDataProvider.searchResultListWithOneItemsProvider())
         val searchModel = entity.convertTo()
         assertThat(
@@ -67,8 +67,9 @@ class SearchNetworkEntityTest {
     }
 
     @Test
-    fun `Given nonEmpty list with unknown height ConvertTo nonEmpty list`() {
-        val entity = SearchNetworkEntity(mutableListOf(DummyDataProvider.singleResultProviderWithUnknownHeight()))
+    fun `test convertTo with nonEmpty list having unknown height return searchModel`() {
+        val entity =
+            SearchNetworkEntity(mutableListOf(DummyDataProvider.singleResultProviderWithUnknownHeight()))
         val searchModel = entity.convertTo()
         assertThat(
             searchModel.get(0).name,
@@ -102,8 +103,9 @@ class SearchNetworkEntityTest {
         assertThat(searchModel.get(0).species.size, equalTo(1))
 
     }
+
     @Test
-    fun `Given list of null data to ConvertToFunction return empty list of string`() {
+    fun `test convertTo with list of null return list of empty string`() {
         val entity = SearchNetworkEntity(mutableListOf(DummyDataProvider.nullResultDataProvider()))
         val searchList = entity.convertTo()
         assertThat(
@@ -136,7 +138,7 @@ class SearchNetworkEntityTest {
     }
 
     @Test
-    fun `Given null to ConvertToFunction return empty List`(){
+    fun `test convertTo with null return empty List`() {
         val entity = SearchNetworkEntity(null)
         val searchList = entity.convertTo()
         assertThat(searchList, equalTo(emptyList()))

@@ -1,6 +1,6 @@
-package com.codeartist.trivagochallenge.detail.data.remoteentity
+package com.codeartist.trivagochallenge.detail.domain.entity
 
-import com.codeartist.trivagochallenge.common.baseentity.Convertable
+import com.codeartist.trivagochallenge.common.base.baseentity.Convertable
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

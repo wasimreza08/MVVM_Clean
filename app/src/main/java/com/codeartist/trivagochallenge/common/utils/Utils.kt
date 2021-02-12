@@ -18,6 +18,6 @@ object Utils {
 
     fun parseId(link: String): Int {
         val url = link.split("/")
-        return url.get(url.size - 2).toInt()
+        return url.get(url.size - 2).toIntOrNull() ?: -1
     }
 }

@@ -1,6 +1,6 @@
 package com.codeartist.trivagochallenge.search.data.remotesource
 
-import com.codeartist.trivagochallenge.search.data.entity.SearchNetworkEntity
+import com.codeartist.trivagochallenge.search.domain.entity.SearchNetworkEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 

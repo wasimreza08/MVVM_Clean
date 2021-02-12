@@ -1,8 +1,8 @@
 package com.codeartist.trivagochallenge.detail.data.remotesource
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
-import com.codeartist.trivagochallenge.detail.data.remoteentity.PlanetEntity
-import com.codeartist.trivagochallenge.detail.data.remoteentity.SpeciesEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.PlanetEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import retrofit2.http.GET
 import retrofit2.http.Path
 

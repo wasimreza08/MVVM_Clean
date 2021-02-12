@@ -1,6 +1,6 @@
 package com.codeartist.trivagochallenge.search.domain.usecase
 
-import com.codeartist.trivagochallenge.common.usecase.BaseUseCase
+import com.codeartist.trivagochallenge.common.base.usecase.BaseUseCase
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.domain.repository.SearchRepository

@@ -4,7 +4,6 @@ import androidx.databinding.ViewDataBinding
 import com.codeartist.trivagochallenge.R
 import com.codeartist.trivagochallenge.databinding.ItemSpeciesBinding
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
-import com.dreampany.framework.ui.adapter.BaseAdapter
 import javax.inject.Inject
 
 class SpeciesAdapter @Inject constructor() :

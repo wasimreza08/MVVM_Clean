@@ -39,7 +39,7 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `Given nonEmpty search string return valid datastate`() =
+    fun `test setSearchString with nonEmpty search string return valid datastate`() =
         mainCoroutineRule.runBlockingTest {
             coEvery { searchUseCase.execute("adi") } coAnswers {
                 DataState.success(
@@ -69,7 +69,7 @@ class SearchViewModelTest {
         }
 
     @Test
-    fun `Given nonEmpty search string return datastate with error`() =
+    fun `test setSearchString with nonEmpty search string return datastate with error`() =
         mainCoroutineRule.runBlockingTest {
             coEvery { searchUseCase.execute("adi") } coAnswers {
                 DataState.error("exception")
@@ -95,7 +95,7 @@ class SearchViewModelTest {
         }
 
     @Test
-    fun `Given empty search string return datastate with empty list`() =
+    fun `test setSearchString with empty search string return datastate with empty list`() =
         mainCoroutineRule.runBlockingTest {
             searchViewModel.setSearchString("")
             //println(searchViewModel.searchResult.getOrAwaitValue())

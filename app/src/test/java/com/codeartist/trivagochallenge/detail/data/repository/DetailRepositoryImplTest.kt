@@ -38,7 +38,7 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `film error entity return error DataState with null`() = runBlocking {
+    fun `test getFilm with error entity return error DataState with null`() = runBlocking {
         mockHttpResponse(
             "failed_response.json",
             HttpURLConnection.HTTP_BAD_REQUEST
@@ -50,7 +50,7 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `film nonEmpty entity return success DataState with data`() = runBlocking {
+    fun `test getFilm with nonEmpty entity return success DataState with data`() = runBlocking {
         mockHttpResponse(
             "film_success_response.json",
             HttpURLConnection.HTTP_OK
@@ -63,7 +63,7 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
 
 
     @Test
-    fun `species error entity return error DataState with null`() = runBlocking {
+    fun `test getSpecies with error entity return error DataState with null`() = runBlocking {
         mockHttpResponse(
             "failed_response.json",
             HttpURLConnection.HTTP_BAD_REQUEST
@@ -75,7 +75,7 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `species nonEmpty entity return success DataState with data`() = runBlocking {
+    fun `test getSpecies with nonEmpty entity return success DataState with data`() = runBlocking {
         mockHttpResponse(
             "species_success_response.json",
             HttpURLConnection.HTTP_OK
@@ -87,19 +87,19 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `homeWorld error entity return error DataState with null`() = runBlocking {
+    fun `test getHomeWorld with error entity return error DataState with null`() = runBlocking {
         mockHttpResponse(
             "failed_response.json",
             HttpURLConnection.HTTP_BAD_REQUEST
         )
-        val dataState = detailRepository.getSpecies(-1)
+        val dataState = detailRepository.getHomeWorld(-1)
         println(dataState)
         Assert.assertThat(dataState.status, equalTo(Status.ERROR))
         Assert.assertThat(dataState.data, equalTo(null))
     }
 
     @Test
-    fun `homeWorld nonEmpty entity return success DataState with data`() = runBlocking {
+    fun `test getHomeWorld with nonEmpty entity return success DataState with data`() = runBlocking {
         mockHttpResponse(
             "homeworld_success_response.json",
             HttpURLConnection.HTTP_OK

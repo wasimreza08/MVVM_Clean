@@ -1,4 +1,4 @@
-package com.dreampany.framework.ui.adapter
+package com.codeartist.trivagochallenge.detail.presentation.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -19,19 +19,12 @@ abstract class BaseAdapter<T, VH : BaseAdapter.ViewHolder<T, VH>> :
         items = Collections.synchronizedList(ArrayList())
     }
 
-    protected fun viewType(item: T): Int = 0
-
     @LayoutRes
     protected abstract fun layoutId(viewType: Int): Int
 
     protected abstract fun createViewHolder(bind: ViewDataBinding, viewType: Int): VH
 
     override fun getItemCount(): Int = items.size
-
-    override fun getItemViewType(position: Int): Int {
-        val item = getItem(position) ?: return 0
-        return viewType(item)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val layoutId = layoutId(viewType)

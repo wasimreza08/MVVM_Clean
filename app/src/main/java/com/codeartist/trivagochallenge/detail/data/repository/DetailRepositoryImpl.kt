@@ -1,11 +1,13 @@
 package com.codeartist.trivagochallenge.detail.data.repository
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.DataState
-import com.codeartist.trivagochallenge.detail.data.remoteentity.PlanetEntity
-import com.codeartist.trivagochallenge.detail.data.remoteentity.SpeciesEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.PlanetEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.data.remotesource.DetailAPI
 import com.codeartist.trivagochallenge.detail.domain.repository.DetailRepository
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class DetailRepositoryImpl @Inject constructor(private val detailAPI: DetailAPI) :
@@ -13,7 +15,7 @@ class DetailRepositoryImpl @Inject constructor(private val detailAPI: DetailAPI)
 
     override suspend fun getFilm(id: Int): DataState<FilmEntity> {
         return try {
-            val films = detailAPI.getFilms(id)
+            val films = withTimeout(Constants.TIME_OUT) { detailAPI.getFilms(id) }
             DataState.success(films)
         } catch (e: Throwable) {
             DataState.error(e.message)
@@ -22,7 +24,7 @@ class DetailRepositoryImpl @Inject constructor(private val detailAPI: DetailAPI)
 
     override suspend fun getSpecies(id: Int): DataState<SpeciesEntity> {
         return try {
-            val species = detailAPI.getSpecies(id)
+            val species = withTimeout(Constants.TIME_OUT) { detailAPI.getSpecies(id) }
             //Log.e("DetailRepositoryImpl", species.toString())
             DataState.success(species)
         } catch (e: Throwable) {
@@ -33,7 +35,7 @@ class DetailRepositoryImpl @Inject constructor(private val detailAPI: DetailAPI)
 
     override suspend fun getHomeWorld(id: Int): DataState<PlanetEntity> {
         return try {
-            val planet = detailAPI.getPopulation(id)
+            val planet = withTimeout(Constants.TIME_OUT) {detailAPI.getPopulation(id)}
             DataState.success(planet)
         } catch (e: Throwable) {
             DataState.error(e.message)

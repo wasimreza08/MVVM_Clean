@@ -1,4 +1,4 @@
-package com.codeartist.trivagochallenge.search.data.entity
+package com.codeartist.trivagochallenge.search.domain.entity
 
 import com.google.gson.annotations.Expose
 

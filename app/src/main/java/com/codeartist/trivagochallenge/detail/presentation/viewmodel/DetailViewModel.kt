@@ -32,8 +32,9 @@ class DetailViewModel @ViewModelInject constructor(
     val isError: LiveData<Boolean> = _isError
 
     private val _characterModel: MutableLiveData<CharacterModel> = MutableLiveData()
+    @FlowPreview
     val detailInfo: LiveData<DataState<FullDetailModel>> = _characterModel.switchMap {
-        liveData(context = viewModelScope.coroutineContext + SupervisorJob() + defaultDispatcher) {
+        liveData(context = viewModelScope.coroutineContext + defaultDispatcher) {
             emit(DataState.loading())
             val homeWorldInfo =
                 viewModelScope.async(defaultDispatcher) { getHomeWorldModel(it.homeWorld) }
@@ -59,7 +60,7 @@ class DetailViewModel @ViewModelInject constructor(
     }
 
     private fun isHomeWorldEmpty(item: HomeWorldModel): Boolean {
-        return item.name.equals("") && item.population.equals("")
+        return item.name.isEmpty() && item.population.isEmpty()
     }
 
     @FlowPreview

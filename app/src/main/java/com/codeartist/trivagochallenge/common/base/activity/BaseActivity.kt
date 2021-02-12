@@ -1,4 +1,4 @@
-package com.codeartist.trivagochallenge.common.activity
+package com.codeartist.trivagochallenge.common.base.activity
 
 import android.app.AlertDialog
 import android.content.Context

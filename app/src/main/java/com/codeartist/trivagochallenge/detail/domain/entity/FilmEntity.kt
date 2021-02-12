@@ -1,6 +1,6 @@
 package com.codeartist.practicetest.data.remoteentity
 
-import com.codeartist.trivagochallenge.common.baseentity.Convertable
+import com.codeartist.trivagochallenge.common.base.baseentity.Convertable
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

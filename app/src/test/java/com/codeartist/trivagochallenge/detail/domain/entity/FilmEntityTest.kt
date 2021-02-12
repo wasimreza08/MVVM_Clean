@@ -1,4 +1,4 @@
-package com.codeartist.trivagochallenge.detail.data.remoteentity
+package com.codeartist.trivagochallenge.detail.domain.entity
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
 import com.codeartist.trivagochallenge.util.DummyDataProvider
