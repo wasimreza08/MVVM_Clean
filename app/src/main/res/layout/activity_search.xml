@@ -28,7 +28,7 @@
                 android:background="@color/cardview_shadow_end_color">
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName"
+                    android:id="@+id/editTextCharacterName"
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
                     android:background="@drawable/search_text_shape"

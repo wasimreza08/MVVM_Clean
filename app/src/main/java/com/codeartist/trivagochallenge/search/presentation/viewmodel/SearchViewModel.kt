@@ -5,6 +5,8 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.codeartist.trivagochallenge.common.utils.DataState
+import com.codeartist.trivagochallenge.common.utils.Status
+import com.codeartist.trivagochallenge.search.domain.entity.SearchNetworkEntity
 import com.codeartist.trivagochallenge.search.domain.usecase.SearchUseCase
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -24,11 +26,19 @@ class SearchViewModel @ViewModelInject constructor(
             liveData(context = viewModelScope.coroutineContext + defaultDispatcher) {
                 if (it.isNotEmpty()) {
                     emit(DataState.loading())
-                    emit(searchUseCase.execute(it))
+                    emit(convertSearchEntityToCharacterModel(searchUseCase.execute(it)))
                 } else {
                     emit(DataState.success(emptyList<CharacterModel>()))
                 }
             }
+        }
+    }
+
+    private fun convertSearchEntityToCharacterModel(result: DataState<SearchNetworkEntity>): DataState<MutableList<CharacterModel>> {
+        if (result.status == Status.SUCCESS) {
+            return DataState.success(result.data?.let { it.convertTo().toMutableList() })
+        } else {
+            return DataState.error(result.message)
         }
     }
 

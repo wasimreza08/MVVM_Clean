@@ -1,7 +1,7 @@
 package com.codeartist.trivagochallenge.util
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
-import com.codeartist.trivagochallenge.detail.domain.entity.PlanetEntity
+import com.codeartist.trivagochallenge.detail.domain.entity.HomeWorldEntity
 import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
@@ -101,8 +101,8 @@ object DummyDataProvider {
         )
     }
 
-    fun provideSinglePlanetEntity(): PlanetEntity {
-        return PlanetEntity("Tatooine", "200000")
+    fun provideSingleHomeWorldEntity(): HomeWorldEntity {
+        return HomeWorldEntity("Tatooine", "200000")
     }
 
     fun provideSingleSpeciesEntity(): SpeciesEntity {

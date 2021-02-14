@@ -29,8 +29,8 @@ class SearchActivity(override val layoutResourceId: Int = R.layout.activity_sear
     val viewModel: SearchViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dataBinding.editTextTextPersonName.doAfterTextChanged {
-            val searchString = dataBinding.editTextTextPersonName.text.toString()
+        dataBinding.editTextCharacterName.doAfterTextChanged {
+            val searchString = dataBinding.editTextCharacterName.text.toString()
             viewModel.setSearchString(searchString)
             setCrossVisibility(searchString)
         }
@@ -56,7 +56,7 @@ class SearchActivity(override val layoutResourceId: Int = R.layout.activity_sear
     }
 
     fun resetSearchText(view: View) {
-        dataBinding.editTextTextPersonName.setText("")
+        dataBinding.editTextCharacterName.setText("")
         setCrossVisibility("")
     }
 

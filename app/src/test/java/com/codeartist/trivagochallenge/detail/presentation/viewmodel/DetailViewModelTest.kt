@@ -2,8 +2,10 @@ package com.codeartist.trivagochallenge.detail.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
+import com.codeartist.practicetest.data.remoteentity.FilmEntity
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
+import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetFilmsUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetHomeWorldUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetSpeciesUseCase
@@ -53,15 +55,15 @@ class DetailViewModelTest {
     fun `test setCharacterInfo with nonEmpty data update live data with nonEmpty data`() =
         mainCoroutineRule.runBlockingTest {
             coEvery { (mockGetHomeWorldUseCase.execute(1)) } coAnswers {
-                DataState.success(DummyDataProvider.provideSingleHomeWorldModel())
+                DataState.success(DummyDataProvider.provideSingleHomeWorldEntity())
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesModel())) }
+                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesEntity())) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.filmModelProviderWithSingleItem())) }
+                flow { emit(DataState.success(DummyDataProvider.filmEntityProviderWithSingleItem())) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())
@@ -86,11 +88,11 @@ class DetailViewModelTest {
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<SpeciesModel>("exception")) }
+                flow { emit(DataState.error<SpeciesEntity>("exception")) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.filmModelProviderWithSingleItem())) }
+                flow { emit(DataState.success(DummyDataProvider.filmEntityProviderWithSingleItem())) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())
@@ -114,11 +116,11 @@ class DetailViewModelTest {
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesModel())) }
+                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesEntity())) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.filmModelProviderWithSingleItem())) }
+                flow { emit(DataState.success(DummyDataProvider.filmEntityProviderWithSingleItem())) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())
@@ -138,15 +140,15 @@ class DetailViewModelTest {
     fun `test setCharacterInfo with nonEmpty data update live data filmList and HomeWorldModel success`() =
         mainCoroutineRule.runBlockingTest {
             coEvery { (mockGetHomeWorldUseCase.execute(1)) } coAnswers {
-                DataState.success(DummyDataProvider.provideSingleHomeWorldModel())
+                DataState.success(DummyDataProvider.provideSingleHomeWorldEntity())
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<SpeciesModel>("exception")) }
+                flow { emit(DataState.error<SpeciesEntity>("exception")) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.filmModelProviderWithSingleItem())) }
+                flow { emit(DataState.success(DummyDataProvider.filmEntityProviderWithSingleItem())) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())
@@ -172,15 +174,15 @@ class DetailViewModelTest {
     fun `test setCharacterInfo with nonEmpty data update live data speciesList and HomeWorldModel success`() =
         mainCoroutineRule.runBlockingTest {
             coEvery { (mockGetHomeWorldUseCase.execute(1)) } coAnswers {
-                DataState.success(DummyDataProvider.provideSingleHomeWorldModel())
+                DataState.success(DummyDataProvider.provideSingleHomeWorldEntity())
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesModel())) }
+                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesEntity())) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<FilmModel>("exception")) }
+                flow { emit(DataState.error<FilmEntity>("exception")) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())
@@ -210,11 +212,11 @@ class DetailViewModelTest {
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesModel())) }
+                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesEntity())) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<FilmModel>("exception")) }
+                flow { emit(DataState.error<FilmEntity>("exception")) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())
@@ -234,15 +236,15 @@ class DetailViewModelTest {
     fun `test setCharacterInfo with nonEmpty data update live data with only HomeWorldModel`() =
         mainCoroutineRule.runBlockingTest {
             coEvery { (mockGetHomeWorldUseCase.execute(1)) } coAnswers {
-                DataState.success(DummyDataProvider.provideSingleHomeWorldModel())
+                DataState.success(DummyDataProvider.provideSingleHomeWorldEntity())
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<SpeciesModel>("exception")) }
+                flow { emit(DataState.error<SpeciesEntity>("exception")) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<FilmModel>("exception")) }
+                flow { emit(DataState.error<FilmEntity>("exception")) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())
@@ -272,11 +274,11 @@ class DetailViewModelTest {
             }
 
             coEvery { (mockGetSpeciesUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<SpeciesModel>("exception")) }
+                flow { emit(DataState.error<SpeciesEntity>("exception")) }
             }
 
             coEvery { (mockGetFilmsUseCase.execute(1)) } coAnswers {
-                flow { emit(DataState.error<FilmModel>("exception")) }
+                flow { emit(DataState.error<FilmEntity>("exception")) }
             }
 
             viewModel.setCharacterInfo(DummyDataProvider.characterModelProviderForDetail())

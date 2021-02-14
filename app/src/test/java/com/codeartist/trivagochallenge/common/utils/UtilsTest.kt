@@ -1,5 +1,7 @@
 package com.codeartist.trivagochallenge.common.utils
 
+import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
+import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.*
 import org.junit.Test
@@ -27,5 +29,15 @@ class UtilsTest {
     fun `test parseId giving invalid url return -1`() {
         val id = Utils.parseId("https://swapi.dev/api/planets/")
         assertThat(id, equalTo(-1))
+    }
+    @Test
+    fun `test isHomeWorldEmpty with non empty model return false`(){
+        val empty = Utils.isHomeWorldEmpty(DummyDataProvider.provideSingleHomeWorldModel())
+        assertThat(empty, equalTo(false))
+    }
+    @Test
+    fun `test isHomeWorldEmpty with empty model return true`(){
+        val empty = Utils.isHomeWorldEmpty(HomeWorldModel())
+        assertThat(empty, equalTo(true))
     }
 }

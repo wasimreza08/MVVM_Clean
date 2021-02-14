@@ -21,6 +21,7 @@ buildscript {
         junit_version = "4.12"
         junit_ext_version = "1.1.1"
         coroutines_test_version = "1.4.2"
+        coroutines_test_version_ui = "1.2.1"
         mockito_core_version = "2.21.0"
         mockito_dexmaker_version = "2.12.1"
         mockk_version = "1.10.0"
@@ -28,6 +29,8 @@ buildscript {
         robolectricVersion = "4.3.1"
         core_testing_version =  "2.0.1"
         mockwebserver_version = "4.9.0"
+        espressoVersion = "3.3.0"
+        assertJ2Version="2.9.1"
     }
     repositories {
         google()
@@ -44,6 +47,9 @@ buildscript {
 }
 
 allprojects {
+    configurations.all {
+        resolutionStrategy.force 'org.objenesis:objenesis:2.6'
+    }
     repositories {
         google()
         jcenter()

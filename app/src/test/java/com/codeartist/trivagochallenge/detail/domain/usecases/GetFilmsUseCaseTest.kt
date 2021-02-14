@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.detail.domain.usecases
 
+import com.codeartist.practicetest.data.remoteentity.FilmEntity
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.detail.domain.repository.DetailRepository
@@ -9,6 +10,7 @@ import com.codeartist.trivagochallenge.util.DummyDataProvider
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.junit.Before
@@ -31,7 +33,7 @@ class GetFilmsUseCaseTest {
         runBlockingTest {
             //println(mockSearchRepositoryImpl)
             coEvery { (mockDetailRepositoryImpl.getFilm(1)) } coAnswers {
-                (DataState.success(DummyDataProvider.filmEntityProviderWithSingleItem()))
+                flow { emit(DataState.success(DummyDataProvider.filmEntityProviderWithSingleItem())) }
             }
 
             //println(mockSearchRepositoryImpl.searchCharacter("adi"))
@@ -45,7 +47,7 @@ class GetFilmsUseCaseTest {
     fun `test execute with null filmEntity list return error datastate`() =
         runBlockingTest {
             coEvery { (mockDetailRepositoryImpl.getFilm(-1)) } coAnswers {
-                (DataState.error("exception"))
+                flow { emit(DataState.error<FilmEntity>("exception")) }
             }
             val dataState = getFilmUseCase.execute(-1)
             assertThat(dataState.first().status, CoreMatchers.equalTo(Status.ERROR))

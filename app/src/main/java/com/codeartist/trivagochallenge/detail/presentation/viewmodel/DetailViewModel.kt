@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.common.utils.Utils
+import com.codeartist.trivagochallenge.common.utils.Utils.isHomeWorldEmpty
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetFilmsUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetHomeWorldUseCase
 import com.codeartist.trivagochallenge.detail.domain.usecases.GetSpeciesUseCase
@@ -15,7 +16,10 @@ import com.codeartist.trivagochallenge.detail.presentation.uimodel.FullDetailMod
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 
 class DetailViewModel @ViewModelInject constructor(
@@ -28,10 +32,10 @@ class DetailViewModel @ViewModelInject constructor(
     private val TAG = "DetailViewModel"
     var defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
         @VisibleForTesting set
-    private val _isError = MutableLiveData(false)
-    val isError: LiveData<Boolean> = _isError
+    private var isError = false
 
     private val _characterModel: MutableLiveData<CharacterModel> = MutableLiveData()
+
     @FlowPreview
     val detailInfo: LiveData<DataState<FullDetailModel>> = _characterModel.switchMap {
         liveData(context = viewModelScope.coroutineContext + defaultDispatcher) {
@@ -47,8 +51,8 @@ class DetailViewModel @ViewModelInject constructor(
                 filmInfo.await(), speciesInfo.await(),
                 homeWorldInfo.await()
             )
-            if (_isError.value == true && detailData.filmList.size == 0 &&
-                detailData.speciesList.size == 0 && isHomeWorldEmpty(detailData.homeWorldModel)
+            if (isError && detailData.filmList.size == 0
+                && detailData.speciesList.size == 0 && isHomeWorldEmpty(detailData.homeWorldModel)
             ) {
                 emit(DataState.error<FullDetailModel>(""))
 
@@ -59,9 +63,7 @@ class DetailViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun isHomeWorldEmpty(item: HomeWorldModel): Boolean {
-        return item.name.isEmpty() && item.population.isEmpty()
-    }
+
 
     @FlowPreview
     private suspend fun getFilmList(films: List<String>?): MutableList<FilmModel> {
@@ -73,12 +75,13 @@ class DetailViewModel @ViewModelInject constructor(
                 getFilmsUseCase.execute(it)
             }.onEach {
                 if (it.status == Status.ERROR) {
-                    _isError.postValue(true)
+                    isError = true
                 }
             }.filter { it.status == Status.SUCCESS }.collect {
-                it.data?.let { list.add(it) }
+                it.data?.let { list.add(it.convertTo()) }
             }
         }
+        // Log.e(TAG, "job2 ends")
         return list
     }
 
@@ -92,13 +95,14 @@ class DetailViewModel @ViewModelInject constructor(
                 getSpeciesUseCase.execute(it)
             }.onEach {
                 if (it.status == Status.ERROR) {
-                    _isError.postValue(true)
+                    isError = true
                 }
             }.filter { it.status == Status.SUCCESS }.collect {
-                it.data?.let { list.add(it) }
+                it.data?.let { list.add(it.convertTo()) }
                 //println("film model $it")
             }
         }
+        // Log.e(TAG, "job3 ends")
         return list
     }
 
@@ -107,17 +111,16 @@ class DetailViewModel @ViewModelInject constructor(
             val population = getPopulationUseCase.execute(id)
             when (population.status) {
                 Status.SUCCESS -> population.data?.let {
-                    //_population.postValue(population.data)
-                    // Log.e("collection population", id.toString())
-                    return it
+                    //Log.e(TAG, "job1 ends")
+                    return it.convertTo()
                 }
-                else -> _isError.postValue(true)
+                else -> isError = true
 
             }
-            // Log.e(TAG, "job3 ends")
-        }
-        return HomeWorldModel()
 
+        }
+
+        return HomeWorldModel()
     }
 
     fun setCharacterInfo(info: CharacterModel) {

@@ -29,7 +29,7 @@ class GetHomeWorldUseCaseTest {
         runBlockingTest {
             //println(mockSearchRepositoryImpl)
             coEvery { (mockDetailRepositoryImpl.getHomeWorld(1)) } coAnswers {
-                (DataState.success(DummyDataProvider.provideSinglePlanetEntity()))
+                (DataState.success(DummyDataProvider.provideSingleHomeWorldEntity()))
             }
 
             //println(mockSearchRepositoryImpl.searchCharacter("adi"))

@@ -74,8 +74,11 @@ abstract class BaseAdapter<T, VH : BaseAdapter.ViewHolder<T, VH>> :
         val position = getPosition(item)
         if (position == -1) {
             items.add(item)
-            if (notify)
+            if (notify){
                 notifyItemInserted(itemCount - 1)
+            }
+                //notifyDataSetChanged()
+                //notifyItemInserted(itemCount - 1)
         } else {
             items[position] = item
             if (notify)

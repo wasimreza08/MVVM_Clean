@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.common.utils
 
+import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldModel
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.math.floor
@@ -19,5 +20,9 @@ object Utils {
     fun parseId(link: String): Int {
         val url = link.split("/")
         return url.get(url.size - 2).toIntOrNull() ?: -1
+    }
+
+    fun isHomeWorldEmpty(item: HomeWorldModel): Boolean {
+        return item.name.isEmpty() && item.population.isEmpty()
     }
 }

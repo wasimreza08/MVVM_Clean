@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.detail.domain.usecases
 
+import com.codeartist.practicetest.data.remoteentity.FilmEntity
 import com.codeartist.trivagochallenge.common.base.usecase.BaseUseCase
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
@@ -10,13 +11,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetFilmsUseCase @Inject constructor(private val detailRepository: DetailRepository) :
-    BaseUseCase<Int, Flow<DataState<FilmModel>>> {
-    override suspend fun execute(id: Int): Flow<DataState<FilmModel>> =  flow {
-        val dataState = detailRepository.getFilm(id)
-        if (dataState.status == Status.SUCCESS) {
-            emit(DataState.success(data = dataState.data?.convertTo()))
-        } else {
-           emit(DataState.error<FilmModel>(dataState.message))
-        }
+    BaseUseCase<Int, Flow<DataState<FilmEntity>>> {
+    override suspend fun execute(id: Int): Flow<DataState<FilmEntity>> {
+        return detailRepository.getFilm(id)
     }
 }

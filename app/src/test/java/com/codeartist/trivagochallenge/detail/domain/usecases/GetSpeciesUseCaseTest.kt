@@ -2,11 +2,13 @@ package com.codeartist.trivagochallenge.detail.domain.usecases
 
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
+import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.domain.repository.DetailRepository
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.junit.Before
@@ -30,7 +32,7 @@ class GetSpeciesUseCaseTest {
         runBlockingTest {
             //println(mockSearchRepositoryImpl)
             coEvery { (mockDetailRepositoryImpl.getSpecies(1)) } coAnswers {
-                (DataState.success(DummyDataProvider.provideSingleSpeciesEntity()))
+                flow { emit(DataState.success(DummyDataProvider.provideSingleSpeciesEntity())) }
             }
 
             //println(mockSearchRepositoryImpl.searchCharacter("adi"))
@@ -44,7 +46,7 @@ class GetSpeciesUseCaseTest {
     fun `test execute with null SpeciesEntity list return error datastate`() =
         runBlockingTest {
             coEvery { (mockDetailRepositoryImpl.getSpecies(-1)) } coAnswers {
-                (DataState.error("exception"))
+                flow { emit((DataState.error<SpeciesEntity>("exception"))) }
             }
             val dataState = getSpeciesUseCase.execute(-1)
             assertThat(dataState.first().status, CoreMatchers.equalTo(Status.ERROR))

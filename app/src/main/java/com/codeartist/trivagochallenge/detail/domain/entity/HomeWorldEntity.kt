@@ -5,7 +5,7 @@ import com.codeartist.trivagochallenge.detail.presentation.uimodel.HomeWorldMode
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class PlanetEntity(
+data class HomeWorldEntity(
     @SerializedName("name")
     @Expose
     var name: String?,

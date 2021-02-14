@@ -7,7 +7,7 @@ import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 
-@ActivityScoped
+
 class SingleLineAdapter @Inject constructor() :
     BaseAdapter<String, SingleLineAdapter.ViewHolder>() {
     override fun layoutId(viewType: Int) = R.layout.item_single_line

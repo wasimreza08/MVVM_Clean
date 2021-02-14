@@ -31,7 +31,7 @@ class SearchListAdapter @Inject constructor() :
         mItemClickListener = itemClickListener
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         lateinit var binding: ItemSearchBinding
 
         constructor(binding: ItemSearchBinding) : this(binding.root) {

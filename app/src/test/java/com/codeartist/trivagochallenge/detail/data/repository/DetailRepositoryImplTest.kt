@@ -6,7 +6,13 @@ import com.codeartist.trivagochallenge.detail.data.remotesource.DetailAPI
 import com.codeartist.trivagochallenge.detail.domain.repository.DetailRepository
 import com.codeartist.trivagochallenge.search.data.repository.MockWebServerBaseTest
 import junit.framework.Assert.assertNotNull
+import junit.framework.Assert.assertNull
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -38,15 +44,16 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `test getFilm with error entity return error DataState with null`() = runBlocking {
+    fun `test getFilm with error entity return error DataState with null`() = runBlockingTest {
         mockHttpResponse(
             "failed_response.json",
-            HttpURLConnection.HTTP_BAD_REQUEST
+            HttpURLConnection.HTTP_CLIENT_TIMEOUT
         )
         val dataState = detailRepository.getFilm(-1)
-        println(dataState)
-        Assert.assertThat(dataState.status, equalTo(Status.ERROR))
-        Assert.assertThat(dataState.data, equalTo(null))
+        val film = dataState.first()
+        println(film.message)
+        assertThat(film.status, equalTo(Status.ERROR))
+        assertNull(film.data)
     }
 
     @Test
@@ -56,22 +63,22 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
             HttpURLConnection.HTTP_OK
         )
         val dataState = detailRepository.getFilm(1)
-        println(dataState)
-        assertThat(dataState.status, equalTo(Status.SUCCESS))
-        assertNotNull(dataState.data)
+        val film = dataState.first()
+        assertThat(film.status, equalTo(Status.SUCCESS))
+        assertNotNull(film.data)
     }
 
 
     @Test
-    fun `test getSpecies with error entity return error DataState with null`() = runBlocking {
+    fun `test getSpecies with error entity return error DataState with null`() = runBlockingTest {
         mockHttpResponse(
             "failed_response.json",
-            HttpURLConnection.HTTP_BAD_REQUEST
+            HttpURLConnection.HTTP_CLIENT_TIMEOUT
         )
         val dataState = detailRepository.getSpecies(-1)
         println(dataState)
-        Assert.assertThat(dataState.status, equalTo(Status.ERROR))
-        Assert.assertThat(dataState.data, equalTo(null))
+        Assert.assertThat(dataState.first().status, equalTo(Status.ERROR))
+        Assert.assertThat(dataState.first().data, equalTo(null))
     }
 
     @Test
@@ -81,16 +88,17 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
             HttpURLConnection.HTTP_OK
         )
         val dataState = detailRepository.getSpecies(1)
+        val species = dataState.first()
         println(dataState)
-        assertThat(dataState.status, equalTo(Status.SUCCESS))
-        assertNotNull(dataState.data)
+        assertThat(species.status, equalTo(Status.SUCCESS))
+        assertNotNull(species.data)
     }
 
     @Test
-    fun `test getHomeWorld with error entity return error DataState with null`() = runBlocking {
+    fun `test getHomeWorld with error entity return error DataState with null`() = runBlockingTest {
         mockHttpResponse(
             "failed_response.json",
-            HttpURLConnection.HTTP_BAD_REQUEST
+            HttpURLConnection.HTTP_CLIENT_TIMEOUT
         )
         val dataState = detailRepository.getHomeWorld(-1)
         println(dataState)
@@ -99,16 +107,17 @@ class DetailRepositoryImplTest : MockWebServerBaseTest() {
     }
 
     @Test
-    fun `test getHomeWorld with nonEmpty entity return success DataState with data`() = runBlocking {
-        mockHttpResponse(
-            "homeworld_success_response.json",
-            HttpURLConnection.HTTP_OK
-        )
-        val dataState = detailRepository.getHomeWorld(1)
-        println(dataState)
-        assertThat(dataState.status, equalTo(Status.SUCCESS))
-        assertNotNull(dataState.data)
-    }
+    fun `test getHomeWorld with nonEmpty entity return success DataState with data`() =
+        runBlocking {
+            mockHttpResponse(
+                "homeworld_success_response.json",
+                HttpURLConnection.HTTP_OK
+            )
+            val dataState = detailRepository.getHomeWorld(1)
+            println(dataState)
+            assertThat(dataState.status, equalTo(Status.SUCCESS))
+            assertNotNull(dataState.data)
+        }
 
     override fun isMockServerEnabled() = true
 }
