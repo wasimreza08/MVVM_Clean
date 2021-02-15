@@ -48,7 +48,8 @@ class DetailActivity(override val layoutResourceId: Int = R.layout.activity_deta
 
     lateinit var detailAdapter: ConcatAdapter
     val viewModel: DetailViewModel by viewModels()
-    private val TAG = "DetailActivity"
+    //private val TAG = "DetailActivity"
+    @FlowPreview
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Log.e(TAG + "progressbar", "onCreate called")

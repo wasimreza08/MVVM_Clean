@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.search.domain.entity
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.Utils
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
@@ -110,19 +111,19 @@ class SearchNetworkEntityTest {
         val searchList = entity.convertTo()
         assertThat(
             searchList.get(0).name,
-            equalTo("")
+            equalTo(Constants.EMPTY_STRING)
         )
         assertThat(
             searchList.get(0).height,
-            equalTo("")
+            equalTo(Constants.EMPTY_STRING)
         )
         assertThat(
             searchList.get(0).birthYear,
-            equalTo("")
+            equalTo(Constants.EMPTY_STRING)
         )
         assertThat(
             searchList.get(0).homeWorld,
-            equalTo("")
+            equalTo(Constants.EMPTY_STRING)
         )
         assertThat(
             searchList.get(0).films,

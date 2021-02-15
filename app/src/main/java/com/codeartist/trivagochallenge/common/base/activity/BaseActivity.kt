@@ -25,12 +25,13 @@ abstract class BaseActivity<DataBinding : ViewDataBinding> : AppCompatActivity()
     var mAlert: AlertDialog? = null
     fun showAlertDialog(context: Context?) {
         if (mAlert == null || !(mAlert as AlertDialog).isShowing) {
-            println("result test:" + "show dialog inside if " + context)
+           // println("result test:" + "show dialog inside if " + context)
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
             builder.setMessage(context?.getString(R.string.error_text))
             builder.setCancelable(false)
             builder.setPositiveButton(
-                context?.getString(R.string.ok), { dialog, id -> cancelAlertDialog() })
+                context?.getString(R.string.ok)
+            ) { dialog, id -> cancelAlertDialog() }
             mAlert = builder.create()
             (mAlert as AlertDialog).show()
         }

@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.detail.presentation.uimodel
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.*
 import org.junit.Test
@@ -18,7 +19,7 @@ class HomeWorldModelTest{
     @Test
     fun `test homeWorldModel with empty data`(){
         val homeWorldModel = HomeWorldModel()
-        assertThat(homeWorldModel.name, equalTo(""))
-        assertThat(homeWorldModel.population, equalTo(""))
+        assertThat(homeWorldModel.name, equalTo(Constants.EMPTY_STRING))
+        assertThat(homeWorldModel.population, equalTo(Constants.EMPTY_STRING))
     }
 }

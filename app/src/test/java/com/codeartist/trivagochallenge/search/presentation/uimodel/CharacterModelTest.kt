@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.search.presentation.uimodel
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
@@ -9,7 +10,7 @@ class CharacterModelTest {
     var name: String = "Adi Gallia"
     var height: String = "184"
     var birthYear: String = "unknown"
-    var homeworld: String = ""
+    var homeworld: String = Constants.EMPTY_STRING
     var films: List<String> = listOf(
         "http://swapi.dev/api/films/4/",
         "http://swapi.dev/api/films/6/"

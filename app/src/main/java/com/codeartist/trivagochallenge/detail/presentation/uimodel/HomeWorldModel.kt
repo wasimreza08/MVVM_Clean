@@ -1,3 +1,5 @@
 package com.codeartist.trivagochallenge.detail.presentation.uimodel
 
-data class HomeWorldModel(var name: String = "", var population: String = "")
+import com.codeartist.trivagochallenge.common.utils.Constants
+
+data class HomeWorldModel(var name: String = Constants.EMPTY_STRING, var population: String = Constants.EMPTY_STRING)

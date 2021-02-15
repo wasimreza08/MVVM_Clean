@@ -3,6 +3,7 @@ package com.codeartist.trivagochallenge.search.presentation.view.adapter
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.codeartist.trivagochallenge.common.utils.Constants
 
 object BindingAdapters {
     @JvmStatic
@@ -14,7 +15,7 @@ object BindingAdapters {
     @BindingAdapter("header_text")
     fun TextView.setHeaderString(header: String?) {
         this.text =
-            if (header.isNullOrEmpty()) "" else header
+            if (header.isNullOrEmpty()) Constants.EMPTY_STRING else header
     }
 }
 

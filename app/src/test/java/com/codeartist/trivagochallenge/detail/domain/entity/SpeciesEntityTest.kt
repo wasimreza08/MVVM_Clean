@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.detail.domain.entity
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
@@ -43,10 +44,10 @@ class SpeciesEntityTest{
         val entity = SpeciesEntity(null, null)
         val model = entity.convertTo()
 
-        assertThat(model.name, equalTo(""))
+        assertThat(model.name, equalTo(Constants.EMPTY_STRING))
         assertThat(
             model.language,
-            equalTo("")
+            equalTo(Constants.EMPTY_STRING)
         )
     }
 }

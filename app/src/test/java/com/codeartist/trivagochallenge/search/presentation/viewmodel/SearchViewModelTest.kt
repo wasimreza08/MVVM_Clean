@@ -2,6 +2,7 @@ package com.codeartist.trivagochallenge.search.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.domain.usecase.SearchUseCase
@@ -97,7 +98,7 @@ class SearchViewModelTest {
     @Test
     fun `test setSearchString with empty search string return datastate with empty list`() =
         mainCoroutineRule.runBlockingTest {
-            searchViewModel.setSearchString("")
+            searchViewModel.setSearchString(Constants.EMPTY_STRING)
             //println(searchViewModel.searchResult.getOrAwaitValue())
             val firstValue = searchViewModel.searchResult.getOrAwaitValue()
             assertThat(

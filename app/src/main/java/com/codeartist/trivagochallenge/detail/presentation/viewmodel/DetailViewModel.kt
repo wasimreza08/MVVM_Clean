@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.common.utils.Utils
@@ -54,7 +55,7 @@ class DetailViewModel @ViewModelInject constructor(
             if (isError && detailData.filmList.size == 0
                 && detailData.speciesList.size == 0 && isHomeWorldEmpty(detailData.homeWorldModel)
             ) {
-                emit(DataState.error<FullDetailModel>(""))
+                emit(DataState.error<FullDetailModel>(Constants.EMPTY_STRING))
 
             } else {
                 emit(DataState.success(detailData))
@@ -115,11 +116,9 @@ class DetailViewModel @ViewModelInject constructor(
                     return it.convertTo()
                 }
                 else -> isError = true
-
             }
 
         }
-
         return HomeWorldModel()
     }
 

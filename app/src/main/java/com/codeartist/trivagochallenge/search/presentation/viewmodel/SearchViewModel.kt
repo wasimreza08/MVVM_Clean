@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.domain.entity.SearchNetworkEntity
@@ -20,7 +21,7 @@ class SearchViewModel @ViewModelInject constructor(
     var defaultDispatcher: CoroutineDispatcher = IO
         @VisibleForTesting set
 
-    private val _searchText: MutableLiveData<String> = MutableLiveData("")
+    private val _searchText: MutableLiveData<String> = MutableLiveData(Constants.EMPTY_STRING)
     val searchResult by lazy {
         _searchText.switchMap {
             liveData(context = viewModelScope.coroutineContext + defaultDispatcher) {

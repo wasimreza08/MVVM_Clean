@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.detail.domain.entity
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
@@ -43,10 +44,10 @@ class PlanetEntityTest{
         val entity = HomeWorldEntity(null, null)
         val model = entity.convertTo()
 
-        assertThat(model.name, CoreMatchers.equalTo(""))
+        assertThat(model.name, CoreMatchers.equalTo(Constants.EMPTY_STRING))
         assertThat(
             model.population,
-            CoreMatchers.equalTo("")
+            CoreMatchers.equalTo(Constants.EMPTY_STRING)
         )
     }
 }

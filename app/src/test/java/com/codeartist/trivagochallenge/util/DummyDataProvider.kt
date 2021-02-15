@@ -1,6 +1,7 @@
 package com.codeartist.trivagochallenge.util
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.detail.domain.entity.HomeWorldEntity
 import com.codeartist.trivagochallenge.detail.domain.entity.SpeciesEntity
 import com.codeartist.trivagochallenge.detail.presentation.uimodel.FilmModel
@@ -15,7 +16,7 @@ object DummyDataProvider {
         var name: String? = "Adi Gallia"
         var height: String? = "184"
         var birthYear: String? = "unknown"
-        var homeworld: String? = ""
+        var homeworld: String? = Constants.EMPTY_STRING
         var films: List<String>? = listOf(
             "http://swapi.dev/api/films/4/",
             "http://swapi.dev/api/films/6/"
@@ -28,7 +29,7 @@ object DummyDataProvider {
         var name: String? = "Adi Gallia"
         var height: String? = "unknown"
         var birthYear: String? = "unknown"
-        var homeworld: String? = ""
+        var homeworld: String? = Constants.EMPTY_STRING
         var films: List<String>? = listOf(
             "http://swapi.dev/api/films/4/",
             "http://swapi.dev/api/films/6/"
@@ -41,7 +42,7 @@ object DummyDataProvider {
         var name = "Adi Gallia"
         var height = "184"
         var birthYear = "unknown"
-        var homeworld = ""
+        var homeworld = Constants.EMPTY_STRING
         var films: List<String> = listOf(
             "http://swapi.dev/api/films/4/",
             "http://swapi.dev/api/films/6/"

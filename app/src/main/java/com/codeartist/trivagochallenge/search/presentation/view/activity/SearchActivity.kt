@@ -52,12 +52,11 @@ class SearchActivity(override val layoutResourceId: Int = R.layout.activity_sear
             }
 
         }
-        //dataBinding.lifecycleOwner = this
     }
 
     fun resetSearchText(view: View) {
-        dataBinding.editTextCharacterName.setText("")
-        setCrossVisibility("")
+        dataBinding.editTextCharacterName.setText(Constants.EMPTY_STRING)
+        setCrossVisibility(Constants.EMPTY_STRING)
     }
 
     private fun setCrossVisibility(searchString: String) {

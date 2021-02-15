@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.detail.presentation.uimodel
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertThat
@@ -22,9 +23,9 @@ class FilmModelTest {
 
     @Test
     fun `test FilmModel with empty items`() {
-        val model = FilmModel("", "", "")
-        assertThat(model.title, equalTo(""))
-        assertThat(model.description, equalTo(""))
-        assertThat(model.url, equalTo(""))
+        val model = FilmModel(Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING)
+        assertThat(model.title, equalTo(Constants.EMPTY_STRING))
+        assertThat(model.description, equalTo(Constants.EMPTY_STRING))
+        assertThat(model.url, equalTo(Constants.EMPTY_STRING))
     }
 }

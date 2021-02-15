@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.codeartist.trivagochallenge.databinding.ItemSearchBinding
 import com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-
+@ActivityScoped
 class SearchListAdapter @Inject constructor() :
     ListAdapter<CharacterModel, SearchListAdapter.ViewHolder>(ListAdapterCallBack()) {
 

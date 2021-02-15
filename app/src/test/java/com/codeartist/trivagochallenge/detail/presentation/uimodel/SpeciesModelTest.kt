@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.detail.presentation.uimodel
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers
 import org.junit.Assert.*
@@ -18,8 +19,8 @@ class SpeciesModelTest{
 
     @Test
     fun `test SpeciesModel with empty items`() {
-        val model = SpeciesModel("", "")
-        assertThat(model.name, CoreMatchers.equalTo(""))
-        assertThat(model.language, CoreMatchers.equalTo(""))
+        val model = SpeciesModel(Constants.EMPTY_STRING, Constants.EMPTY_STRING)
+        assertThat(model.name, CoreMatchers.equalTo(Constants.EMPTY_STRING))
+        assertThat(model.language, CoreMatchers.equalTo(Constants.EMPTY_STRING))
     }
 }

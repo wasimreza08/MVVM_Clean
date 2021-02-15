@@ -1,5 +1,6 @@
 package com.codeartist.trivagochallenge.search.domain.usecase
 
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.common.utils.DataState
 import com.codeartist.trivagochallenge.common.utils.Status
 import com.codeartist.trivagochallenge.search.domain.repository.SearchRepository
@@ -42,10 +43,10 @@ class SearchUseCaseTest {
     @Test
     fun `test execute with exception return null charactermodel`() =
         runBlockingTest {
-            coEvery { (mockSearchRepositoryImpl.searchCharacter("")) } coAnswers {
+            coEvery { (mockSearchRepositoryImpl.searchCharacter(Constants.EMPTY_STRING)) } coAnswers {
                 (DataState.error("exception"))
             }
-            val dataState = searchUseCase.execute("")
+            val dataState = searchUseCase.execute(Constants.EMPTY_STRING)
             assertThat(dataState.status, equalTo(Status.ERROR))
             assertNull(dataState.data)
             assertThat(dataState.message, equalTo("exception"))

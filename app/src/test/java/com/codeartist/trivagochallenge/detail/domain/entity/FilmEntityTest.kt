@@ -1,6 +1,7 @@
 package com.codeartist.trivagochallenge.detail.domain.entity
 
 import com.codeartist.practicetest.data.remoteentity.FilmEntity
+import com.codeartist.trivagochallenge.common.utils.Constants
 import com.codeartist.trivagochallenge.util.DummyDataProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertNull
@@ -49,8 +50,8 @@ class FilmEntityTest {
         val entity = FilmEntity(null, null, null)
         val model = entity.convertTo()
 
-        assertThat(model.title, equalTo(""))
-        assertThat(model.description, equalTo(""))
-        assertThat(model.url, equalTo(""))
+        assertThat(model.title, equalTo(Constants.EMPTY_STRING))
+        assertThat(model.description, equalTo(Constants.EMPTY_STRING))
+        assertThat(model.url, equalTo(Constants.EMPTY_STRING))
     }
 }
