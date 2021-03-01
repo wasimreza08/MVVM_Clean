@@ -6,7 +6,7 @@
 
         <variable
             name="species"
-            type="com.codeartist.trivagochallenge.detail.presentation.uimodel.SpeciesModel" />
+            type="com.codeartist.starwar.detail.presentation.uimodel.SpeciesModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

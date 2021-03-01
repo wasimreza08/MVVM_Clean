@@ -6,7 +6,7 @@
 
         <variable
             name="homeWorld"
-            type="com.codeartist.trivagochallenge.detail.presentation.uimodel.PlanetModel" />
+            type="com.codeartist.starwar.detail.presentation.uimodel.HomeWorldModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
