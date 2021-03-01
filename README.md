@@ -1,5 +1,5 @@
-In this codebase, I have solved the case study given by Trivago. 
-To complete the case study I have used JetPack libraries provided by google and features of kotlin language.
+In this codebase I have developed a sample application with MVVM and clean code architecture. 
+The application is based on the StarWar API. I have also used several jetpack libraries to complete the application. 
 The libraries I have used are given below with the reasons:
 
  *Data Binding: This library binds the UI components with the data models. That is why whenever the 
