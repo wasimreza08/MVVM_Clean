@@ -6,7 +6,7 @@
 
         <variable
             name="characterInfo"
-            type="com.codeartist.trivagochallenge.search.presentation.uimodel.CharacterModel" />
+            type="com.codeartist.starwar.search.presentation.uimodel.CharacterModel" />
 
     </data>
 
